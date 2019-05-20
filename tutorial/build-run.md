@@ -38,7 +38,7 @@ To initialize configuration and a `genesis.json` file for your application and a
 
 ```bash
 # Initialize configuration files and genesis file
-nsd init --chain-id namechain
+nsd init namechain --chain-id namechain
 
 # Copy the `Address` output here and save it for later use 
 # [optional] add "--ledger" at the end to use a Ledger Nano S 

@@ -19,14 +19,16 @@ import (
 	auth "github.com/cosmos/cosmos-sdk/x/auth/client/rest"
 	bankcmd "github.com/cosmos/cosmos-sdk/x/bank/client/cli"
 	bank "github.com/cosmos/cosmos-sdk/x/bank/client/rest"
+
 	app "github.com/cosmos/sdk-application-tutorial"
-	nsclient "github.com/cosmos/sdk-application-tutorial/x/nameservice/client"
-	nsrest "github.com/cosmos/sdk-application-tutorial/x/nameservice/client/rest"
+
+	nsclient "github.com/cosmos/sdk-application-tutorial/x/nameshake/client"
+	nsrest "github.com/cosmos/sdk-application-tutorial/x/nameshake/client/rest"
 )
 
 const (
 	storeAcc = "acc"
-	storeNS  = "nameservice"
+	storeNS  = "nameshake"
 )
 
 var defaultCLIHome = os.ExpandEnv("$HOME/.nscli")
@@ -36,49 +38,48 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	// Read in the configuration file for the sdk
 	config := sdk.GetConfig()
 	config.SetBech32PrefixForAccount(sdk.Bech32PrefixAccAddr, sdk.Bech32PrefixAccPub)
 	config.SetBech32PrefixForValidator(sdk.Bech32PrefixValAddr, sdk.Bech32PrefixValPub)
 	config.SetBech32PrefixForConsensusNode(sdk.Bech32PrefixConsAddr, sdk.Bech32PrefixConsPub)
 	config.Seal()
 
-	mc := []sdk.ModuleClients{
+	mc := []sdk.ModuleClient{
 		nsclient.NewModuleClient(storeNS, cdc),
 	}
 
 	rootCmd := &cobra.Command{
 		Use:   "nscli",
-		Short: "nameservice Client",
+		Short: "nameshake client",
 	}
 
-	// Add --chain-id to persistent flags and mark it required
 	rootCmd.PersistentFlags().String(client.FlagChainID, "", "Chain ID of tendermint node")
 	rootCmd.PersistentPreRunE = func(_ *cobra.Command, _ []string) error {
-		return initConfig(rootCmd)
+		return InitConfig(rootCmd)
 	}
 
-	// Construct Root Command
+	// what are the different parts being composed here?
 	rootCmd.AddCommand(
 		rpc.StatusCommand(),
 		client.ConfigCmd(defaultCLIHome),
 		queryCmd(cdc, mc),
 		txCmd(cdc, mc),
 		client.LineBreak,
-		lcd.ServeCommand(cdc, registerRoutes),
+		lcd.ServeCommand(cdc, registerRoutes), //
 		client.LineBreak,
 		keys.Commands(),
 		client.LineBreak,
 	)
 
 	executor := cli.PrepareMainCmd(rootCmd, "NS", defaultCLIHome)
+
 	err := executor.Execute()
 	if err != nil {
 		panic(err)
 	}
 }
-
 func registerRoutes(rs *lcd.RestServer) {
+
 	rs.CliCtx = rs.CliCtx.WithAccountDecoder(rs.Cdc)
 	rpc.RegisterRoutes(rs.CliCtx, rs.Mux)
 	tx.RegisterRoutes(rs.CliCtx, rs.Mux, rs.Cdc)
@@ -87,7 +88,7 @@ func registerRoutes(rs *lcd.RestServer) {
 	nsrest.RegisterRoutes(rs.CliCtx, rs.Mux, rs.Cdc, storeNS)
 }
 
-func queryCmd(cdc *amino.Codec, mc []sdk.ModuleClients) *cobra.Command {
+func queryCmd(cdc *amino.Codec, mc []sdk.ModuleClient) *cobra.Command {
 	queryCmd := &cobra.Command{
 		Use:     "query",
 		Aliases: []string{"q"},
@@ -110,17 +111,16 @@ func queryCmd(cdc *amino.Codec, mc []sdk.ModuleClients) *cobra.Command {
 	return queryCmd
 }
 
-func txCmd(cdc *amino.Codec, mc []sdk.ModuleClients) *cobra.Command {
+func txCmd(cdc *amino.Codec, mc []sdk.ModuleClient) *cobra.Command {
 	txCmd := &cobra.Command{
 		Use:   "tx",
-		Short: "Transactions subcommands",
+		Short: "Transaction subcommands",
 	}
 
 	txCmd.AddCommand(
 		bankcmd.SendTxCmd(cdc),
 		client.LineBreak,
 		authcmd.GetSignCommand(cdc),
-		tx.GetBroadcastCommand(cdc),
 		client.LineBreak,
 	)
 
@@ -131,13 +131,14 @@ func txCmd(cdc *amino.Codec, mc []sdk.ModuleClients) *cobra.Command {
 	return txCmd
 }
 
-func initConfig(cmd *cobra.Command) error {
+func InitConfig(cmd *cobra.Command) error {
 	home, err := cmd.PersistentFlags().GetString(cli.HomeFlag)
 	if err != nil {
 		return err
 	}
 
 	cfgFile := path.Join(home, "config", "config.toml")
+
 	if _, err := os.Stat(cfgFile); err == nil {
 		viper.SetConfigFile(cfgFile)
 
@@ -145,11 +146,13 @@ func initConfig(cmd *cobra.Command) error {
 			return err
 		}
 	}
+
 	if err := viper.BindPFlag(client.FlagChainID, cmd.PersistentFlags().Lookup(client.FlagChainID)); err != nil {
 		return err
 	}
 	if err := viper.BindPFlag(cli.EncodingFlag, cmd.PersistentFlags().Lookup(cli.EncodingFlag)); err != nil {
 		return err
 	}
+
 	return viper.BindPFlag(cli.OutputFlag, cmd.PersistentFlags().Lookup(cli.OutputFlag))
 }

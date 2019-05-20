@@ -2,14 +2,12 @@ package cli
 
 import (
 	"fmt"
-
 	"github.com/cosmos/cosmos-sdk/client/context"
 	"github.com/cosmos/cosmos-sdk/codec"
-	"github.com/cosmos/sdk-application-tutorial/x/nameservice"
+	nameshake "github.com/cosmos/sdk-application-tutorial/x/nameshake"
 	"github.com/spf13/cobra"
 )
 
-// GetCmdResolveName queries information about a name
 func GetCmdResolveName(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "resolve [name]",
@@ -25,18 +23,18 @@ func GetCmdResolveName(queryRoute string, cdc *codec.Codec) *cobra.Command {
 				return nil
 			}
 
-			var out nameservice.QueryResResolve
+			var out nameshake.QueryResResolve
 			cdc.MustUnmarshalJSON(res, &out)
 			return cliCtx.PrintOutput(out)
 		},
 	}
 }
 
-// GetCmdWhois queries information about a domain
 func GetCmdWhois(queryRoute string, cdc *codec.Codec) *cobra.Command {
+
 	return &cobra.Command{
 		Use:   "whois [name]",
-		Short: "Query whois info of name",
+		Short: "whois name",
 		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
@@ -48,29 +46,28 @@ func GetCmdWhois(queryRoute string, cdc *codec.Codec) *cobra.Command {
 				return nil
 			}
 
-			var out nameservice.Whois
+			var out nameshake.QueryResResolve
 			cdc.MustUnmarshalJSON(res, &out)
 			return cliCtx.PrintOutput(out)
 		},
 	}
 }
 
-// GetCmdNames queries a list of all names
 func GetCmdNames(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "names",
 		Short: "names",
-		// Args:  cobra.ExactArgs(1),
+		Args:  cobra.ExactArgs(1),
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 
 			res, err := cliCtx.QueryWithData(fmt.Sprintf("custom/%s/names", queryRoute), nil)
 			if err != nil {
-				fmt.Printf("could not get query names\n")
+				fmt.Printf("could not query names \n")
 				return nil
 			}
 
-			var out nameservice.QueryResNames
+			var out nameshake.QueryResNames
 			cdc.MustUnmarshalJSON(res, &out)
 			return cliCtx.PrintOutput(out)
 		},
