@@ -6,52 +6,52 @@
 
 このチュートリアルプロジェクトの最終的なソースコードはすべてこのディレクトリにあります(そしてコンパイルされます)。ただし、手動で作業を進め、自分でプロジェクトを構築してみることをお勧めします。
 
-##必要条件
+## 必要条件
 
  -  [`golang`> 1.12.1](https://golang.org/doc/install)インストール済み
  - 動いている[`$ GOPATH`](https://github.com/golang/go/wiki/SettingGOPATH)
  - あなた自身のブロックチェーンを作りたい！
 
-##チュートリアル
+## チュートリアル
 
 このチュートリアルでは、アプリケーションを構成する次のファイルを作成します。
 
 ```bash
 ./nameservice
-├──Gopkg.toml
-├──Makefile
-├──app.go
-├──cmd
-│├──nscli
-││└──main.go
-│└──nsd
-│└──main.go
-└──x
-    └──ネームサービス
-        ├──クライアント
-        │├──cli
-        ││├──query.go
-        ││└──tx.go
-        │├──rest
-        ││└──rest.go
-        │└──module_client.go
-        ├──codec.go
-        ├──handler.go
-        ├──keeper.go
-        ├──msgs.go
-        ├──querier.go
-        └──types.go
+├── Gopkg.toml
+├── Makefile
+├── app.go
+├── cmd
+│   ├── nscli
+│   │   └── main.go
+│   └── nsd
+│       └── main.go
+└── x
+    └── nameservice
+        ├── client
+        │   ├── cli
+        │   │   ├── query.go
+        │   │   └── tx.go
+        │   ├── rest
+        │   │   └── rest.go
+        │   └── module_client.go
+        ├── codec.go
+        ├── handler.go
+        ├── keeper.go
+        ├── msgs.go
+        ├── querier.go
+        └── types.go
 ```
 新しいgitリポジトリを作成することから始めます。
 ```bash
-mkdir -p $ GOPATH/src/github.com/{。ユーザー名}/nameservice
-cd $ GOPATH/src/github.com/{。ユーザー名}/nameservice
+mkdir -p $GOPATH/src/github.com/{ .Username }/nameservice
+cd $GOPATH/src/github.com/{ .Username }/nameservice
 git init
 ```
 
 それでは、ただフォローしてください。最初のステップでは、アプリケーションの設計について説明します。コーディングセクションに直接ジャンプしたい場合は、[2番目のステップ](./keeper.md)から始めることができます。
 
-###チュートリアルパート
+## #チュートリアルパート
 
 1. アプリケーションを[デザイン](./app-design.md)します。
 2. [`./app.go`](..app_init.md)でアプリケーションの実装を始めます。
@@ -70,4 +70,4 @@ git init
 13. 例を[ビルドして実行](./build-run.md)します。
 14. [RESTルートを実行する](run-rest.md)。
 
-##チュートリアルを始めるために[ここをクリック](./app-design.md)
+## チュートリアルを始めるために[ここをクリック](./app-design.md)
