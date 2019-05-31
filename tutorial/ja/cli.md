@@ -1,4 +1,4 @@
-＃ネームサービスモジュールCLI
+# ネームサービスモジュールCLI
 
 Cosmos SDKはCLI対話のために[`cobra`](https://github.com/spf13/cobra)ライブラリを使用します。このライブラリは、各モジュールが独自のコマンドを公開するのを簡単にします。モジュールとユーザーのCLIのやり取りを定義するには、まず以下のファイルを作成します。
 
@@ -22,7 +22,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// GetCmdResolveName queries information about a name
+// GetCmdResolveNameは名前に関する情報を問い合わせます
 func GetCmdResolveName(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "resolve [name]",

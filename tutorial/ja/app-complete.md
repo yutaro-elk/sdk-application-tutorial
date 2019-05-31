@@ -1,4 +1,4 @@
-＃モジュールをインポートしてアプリケーションを完成させる
+# モジュールをインポートしてアプリケーションを完成させる
 
 モジュールの準備ができたので、他の2つのモジュールと共に `./app.go`ファイルに組み込むことができます[` auth`](https://godoc.org/github.com/cosmos/cosmos- sdk/x/auth)および[`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank)：
 

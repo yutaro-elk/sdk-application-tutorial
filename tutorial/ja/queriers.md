@@ -1,4 +1,4 @@
-# Queriers
+# クエリ
 
 `./x/nameservice/querier.go`ファイルを作成することから始めます。これは、アプリケーション状態のユーザーに対してどのクエリを実行できるかを定義する場所です。あなたの `nameservice`モジュールは二つのクエリを公開します：
 
@@ -20,14 +20,14 @@ import (
 	abci "github.com/tendermint/tendermint/abci/types"
 )
 
-// query endpoints supported by the nameservice Querier
+// nameserviceクエリによってサポートされるクエリエンドポイント
 const (
 	QueryResolve = "resolve"
 	QueryWhois   = "whois"
 	QueryNames   = "names"
 )
 
-// NewQuerier is the module level router for state queries
+// NewQuerierは、状態照会用のモジュールレベルルーターです。
 func NewQuerier(keeper Keeper) sdk.Querier {
 	return func(ctx sdk.Context, path []string, req abci.RequestQuery) (res []byte, err sdk.Error) {
 		switch path[0] {
@@ -44,7 +44,7 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 }
 ```
 
-ルータが定義されたので、各クエリの入力と応答を定義します。
+ルータが定義されたので、各クエリの入力と返り値を定義します。
 
 ```go
 // nolint: unparam
@@ -65,12 +65,12 @@ func queryResolve(ctx sdk.Context, path []string, req abci.RequestQuery, keeper 
 	return bz, nil
 }
 
-// Query Result Payload for a resolve query
+// 解決クエリの結果
 type QueryResResolve struct {
 	Value string `json:"value"`
 }
 
-// implement fmt.Stringer
+// fmt.Stringerを実装
 func (r QueryResResolve) String() string {
 	return r.Value
 }
@@ -89,7 +89,7 @@ func queryWhois(ctx sdk.Context, path []string, req abci.RequestQuery, keeper Ke
 	return bz, nil
 }
 
-// implement fmt.Stringer
+// fmt.Stringerを実装する
 func (w Whois) String() string {
 	return strings.TrimSpace(fmt.Sprintf(`Owner: %s
 Value: %s
@@ -114,10 +114,10 @@ func queryNames(ctx sdk.Context, req abci.RequestQuery, keeper Keeper) (res []by
 	return bz, nil
 }
 
-// Query Result Payload for a names query
+// 名前クエリのクエリ結果ペイロード
 type QueryResNames []string
 
-// implement fmt.Stringer
+// fmt.Stringerを実装する
 func (n QueryResNames) String() string {
 	return strings.Join(n[:], "\n")
 }

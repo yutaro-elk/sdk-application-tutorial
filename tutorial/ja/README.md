@@ -55,11 +55,11 @@ git init
 
 1. アプリケーションを[デザイン](./app-design.md)します。
 2. [`./app.go`](..app_init.md)でアプリケーションの実装を始めます。
-3. いくつかの基本的な[`Types`](types.md)を定義してモジュールの構築を始めます。
+3. いくつかの基本的な[`型`](types.md)を定義してモジュールの構築を始めます。
 4. [`Keeper`](./keeper.md)を使ってモジュールのメインコアを作成します。
-5. [`Msgs`と` Handlers`](./msgs-handlers.md)を通して状態遷移を定義します。
-* [`SetName`](set-name.md)
-* [`BuyName`](./buy-name.md)
+5. [`Msgs`と`Handlers`](./msgs-handlers.md)を通して状態遷移を定義します。
+    * [`SetName`](set-name.md)
+    * [`BuyName`](./buy-name.md)
 6. [`Queriers`](./queriers.md)を使ってあなたのステートマシンのビューを作ります。
 7. [`sdk.Codec`](./codec.md)を使ってエンコーディングフォーマットで型を登録します。
 8. [あなたのモジュール用のCLIインタラクション](./cli.md)を作成します。
