@@ -2,9 +2,9 @@
 
 ## `Makefile`
 
-一般的なコマンドが含まれているルートディレクトリに `。/ Makefile`を書くことでユーザがあなたのアプリケーションを構築するのを助けてください：
+一般的なコマンドが含まれているルートディレクトリに `./Makefile`を書くことでユーザがあなたのアプリケーションを構築するのを助けてください：
 
-> _ * NOTE * _：下記のMakefileにはCosmos SDKやTendermint Makefileと同じコマンドがいくつか含まれています。
+> _*NOTE*_：下記のMakefileにはCosmos SDKやTendermint Makefileと同じコマンドがいくつか含まれています。
 
 ```makefile
 all: install
@@ -71,9 +71,9 @@ go.sum: go.mod
 
 ## `go.mod`
 
-Golangにはいくつかの依存関係管理ツールがあります。このチュートリアルでは、[`Go Modules`]（https://github.com/golang/go/wiki/Modules）を使用します。 `Go Modules`はリポジトリのルートにある` go.mod`ファイルを使ってアプリケーションが必要とする依存関係を定義します。 Cosmos SDKアプリは現在、一部のライブラリの特定のバージョンに依存しています。以下のマニフェストには必要なすべてのバージョンが含まれています。はじめに、 `。/ go.mod`ファイルの内容を以下の` constraint`と `overrides`に置き換えてください：
+Golangにはいくつかの依存関係管理ツールがあります。このチュートリアルでは、[`Go Modules`](https://github.com/golang/go/wiki/Modules)を使用します。 `Go Modules`はリポジトリのルートにある` go.mod`ファイルを使ってアプリケーションが必要とする依存関係を定義します。 Cosmos SDKアプリは現在、一部のライブラリの特定のバージョンに依存しています。以下のマニフェストには必要なすべてのバージョンが含まれています。はじめに、 `./go.mod`ファイルの内容を以下の` constraint`と `overrides`に置き換えてください：
 
-> _ * NOTE * _：自分のリポジトリをフォローしている場合は、それを反映するようにモジュールパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}）。
+> _*NOTE*_：自分のリポジトリをフォローしている場合は、それを反映するようにモジュールパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo})。
 
 ```
 module sdk-application-tutorial

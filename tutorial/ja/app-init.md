@@ -51,8 +51,8 @@ import (
  - Tendermintコンセンサスエンジンから受け取ったトランザクションをデコードします。
  - トランザクションからメッセージを抽出し、基本的な健全性チェックを行います。
  - メッセージを処理できるように適切なモジュールにルーティングします。 `baseapp`はあなたが使いたい特定のモジュールについての知識を持っていないことに注意してください。このチュートリアルの後半で見るように、そのようなモジュールを `app.go`で宣言するのはあなたの仕事です。 `baseapp`はどのモジュールにも適用できるコアルーティングロジックのみを実装しています。
- -  ABCIメッセージが[`DeliverTx`](https://tendermint.com/docs/spec/abci/abci.html#delivertx）（[` CheckTx`]（https://tendermint.com/docs/）の場合にコミットspec / abci / abci.html＃checktx）変更は永続的ではありません)。
- -  [`Beginblock`](https://tendermint.com/docs/spec/abci/abci.html#beginblock）および[` Endblock`]（https://tendermint.com/docs/spec/abci）のセットアップを手伝ってください/abci.html#endblock）は、各ブロックの最初と最後に実行されるロジックを定義するための2つのメッセージです。実際には、各モジュールはそれぞれ独自の `BeginBlock`と` EndBlock`サブロジックを実装しています。アプリの役割はすべてをまとめることです（_注意：あなたのアプリケーションではこれらのメッセージを使わないでしょう)。
+ -  ABCIメッセージが[`DeliverTx`](https://tendermint.com/docs/spec/abci/abci.html#delivertx)([` CheckTx`](https://tendermint.com/docs/)の場合にコミットspec/abci/abci.html＃checktx)変更は永続的ではありません)。
+ -  [`Beginblock`](https://tendermint.com/docs/spec/abci/abci.html#beginblock)および[` Endblock`](https://tendermint.com/docs/spec/abci)のセットアップを手伝ってください/abci.html#endblock)は、各ブロックの最初と最後に実行されるロジックを定義するための2つのメッセージです。実際には、各モジュールはそれぞれ独自の `BeginBlock`と` EndBlock`サブロジックを実装しています。アプリの役割はすべてをまとめることです(_注意：あなたのアプリケーションではこれらのメッセージを使わないでしょう)。
  - あなたの状態を初期化するのに役立ちます。
  - クエリ設定に役立ちます。
 

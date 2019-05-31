@@ -51,7 +51,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 
 ###リクエストスキーマ：
 
-#### `POST / nameservice / names` BuyNameリクエストボディ：
+#### `POST/nameservice/names` BuyNameリクエストボディ：
 ```json
 {
   "base_req": {

@@ -1,20 +1,20 @@
 ＃エントリポイント
 
-golangでは、規約はプロジェクトの `。/ cmd`フォルダにバイナリにコンパイルされるファイルを置くことです。あなたのアプリケーションにはあなたが作りたい2つのバイナリがあります。
+golangでは、規約はプロジェクトの `./cmd`フォルダにバイナリにコンパイルされるファイルを置くことです。あなたのアプリケーションにはあなたが作りたい2つのバイナリがあります。
 
  -  `nsd`：このバイナリは、p2p接続を維持し、トランザクションを伝播し、ローカルストレージを処理し、ネットワークと対話するためのRPCインタフェースを提供するという点で、` bitcoind`や他の暗号通貨デーモンと似ています。この場合、Tendermintはネットワーキングとトランザクションの順序付けに使用されます。
  -  `nscli`：このバイナリはユーザがあなたのアプリケーションと対話することを可能にするコマンドを提供します。
 
 はじめに、これらのバイナリをインスタンス化する2つのファイルをプロジェクトディレクトリに作成します。
 
- -  `。/ cmd / nsd / main.go`
- -  `。/ cmd / nscli / main.go`
+ -  `./cmd/nsd/main.go`
+ -  `./cmd/nscli/main.go`
 
 ## `nsd`
 
-以下のコードを `nsd / main.go`に追加することから始めます。
+以下のコードを `nsd/main.go`に追加することから始めます。
 
-> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}`）。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}`)。
 
 ```go
 package main
@@ -258,7 +258,7 @@ func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 
 `nscli`コマンドをビルドして終了してください。
 
-> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}`）。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}`)。
 
 ```go
 package main
@@ -422,7 +422,7 @@ func initConfig(cmd *cobra.Command) error {
 注意：
 
  - コードはTendermint、Cosmos-SDKおよびあなたのNameserviceモジュールからのCLIコマンドを結合します。
- -  [`cobra` CLI documentation]（http://github.com/spf13/cobra）は上記のコードを理解するのに役立ちます。
+ -  [`cobra` CLI documentation](http://github.com/spf13/cobra)は上記のコードを理解するのに役立ちます。
  - ここで先に定義した `ModuleClient`を見ることができます。
  - ルートが `registerRoutes`関数にどのように含まれているかに注意してください
 

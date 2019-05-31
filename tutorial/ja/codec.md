@@ -1,6 +1,6 @@
 ＃コーデックファイル
 
-型をAminoに登録する（https://github.com/tendermint/go-amam#registering-types）ようにするために、それらをエンコード/デコードできるようにするには、 `に入れる必要があるコードが少しあります。 / x / nameservice / codec.go`。あなたが作成したインターフェースやインターフェースを実装する構造体は `RegisterCodec`関数で宣言する必要があります。このモジュールでは、2つの `Msg`実装（` SetName`と `BuyName`）を登録する必要がありますが、あなたの` Whois`クエリの戻り型はそうではありません：
+型をAminoに登録する(https://github.com/tendermint/go-amam#registering-types)ようにするために、それらをエンコード/デコードできるようにするには、 `に入れる必要があるコードが少しあります。/x/nameservice/codec.go`。あなたが作成したインターフェースやインターフェースを実装する構造体は `RegisterCodec`関数で宣言する必要があります。このモジュールでは、2つの `Msg`実装(` SetName`と `BuyName`)を登録する必要がありますが、あなたの` Whois`クエリの戻り型はそうではありません：
 
 ```go
 package nameservice

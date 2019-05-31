@@ -1,8 +1,8 @@
 ＃モジュールをインポートしてアプリケーションを完成させる
 
-モジュールの準備ができたので、他の2つのモジュールと共に `。/ app.go`ファイルに組み込むことができます[` auth`]（https://godoc.org/github.com/cosmos/cosmos- sdk / x / auth）および[`bank`]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank）：
+モジュールの準備ができたので、他の2つのモジュールと共に `./app.go`ファイルに組み込むことができます[` auth`](https://godoc.org/github.com/cosmos/cosmos- sdk/x/auth)および[`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank)：
 
-> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
 
 ```go
 package app
@@ -84,8 +84,8 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 
  - 必要な各モジュールから必要な `Keepers`をインスタンス化します。
  - それぞれの `Keeper`が必要とする` storeKeys`を生成します。
- - 各モジュールから `Handler`を登録します。このためには `baseapp`の` router`の `AddRoute（）`メソッドを使います。
- - 各モジュールからQuerierを登録します。このためには `baseapp`の` queryRouter`の `AddRoute（）`メソッドを使います。
+ - 各モジュールから `Handler`を登録します。このためには `baseapp`の` router`の `AddRoute()`メソッドを使います。
+ - 各モジュールからQuerierを登録します。このためには `baseapp`の` queryRouter`の `AddRoute()`メソッドを使います。
  -  `baseApp`マルチストアで提供されたキーに` KVStore`をマウントします。
  - 初期アプリケーション状態を定義するための `initChainer`を設定します。
 
@@ -178,7 +178,7 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 }
 ```
 
-> _ * NOTE * _：上記のTransientStoreは、永続化されていない状態のKVStoreのメモリ内実装です。
+> _*NOTE*_：上記のTransientStoreは、永続化されていない状態のKVStoreのメモリ内実装です。
 
 `initChainer`は最初のチェーンスタート時に` genesis.json`のアカウントがどのようにアプリケーション状態にマッピングされるかを定義します。 `ExportAppStateAndValidators`関数はアプリケーションの初期状態をブートストラップするのを助けます。今のところ、これらについてどちらも心配する必要はありません。
 
@@ -244,7 +244,7 @@ func (app *nameServiceApp) ExportAppStateAndValidators() (appState json.RawMessa
 }
 ```
 
-最後に、あなたので使われているすべてのモジュールを正しく登録するアミノ[`* codec.Codec`]（https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec）を生成するためのヘルパー関数を追加します。応用：
+最後に、あなたので使われているすべてのモジュールを正しく登録するアミノ[`* codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec)を生成するためのヘルパー関数を追加します。応用：
 
 ```go
 // MakeCodec generates the necessary codecs for Amino

@@ -2,11 +2,11 @@
 
 あなたのモジュールは、モジュールの機能へのプログラムによるアクセスを可能にするためにRESTインターフェースを公開することもできます。はじめに、HTTPハンドラを保持するファイルを作成します。
 
- -  `。/ x / nameservice / client / rest / rest.go`
+ -  `./x/nameservice/client/rest/rest.go`
 
 始めるために `imports`と` const`を追加してください：
 
-> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
 
 ```go
 package rest
@@ -187,7 +187,7 @@ func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 
 上記のコードについての注意：
 
- -  [`BaseReq`]（https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq）には、トランザクションを作成するための基本的な必須フィールド（使用するキー、デコード方法）が含まれています。それは、あなたがどのチェーンにいるのかなど...そして示されているように埋め込まれるように設計されています。
+ -  [`BaseReq`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq)には、トランザクションを作成するための基本的な必須フィールド(使用するキー、デコード方法)が含まれています。それは、あなたがどのチェーンにいるのかなど...そして示されているように埋め込まれるように設計されています。
  -  `baseReq.ValidateBasic`と` clientrest.CompleteAndBroadcastTxREST`はレスポンスコードの設定をあなたに代わって処理するので、これらの関数を使うときにエラーや成功を処理することについて心配する必要はありません。
 
 ###今すぐあなたのモジュールはそれが[あなたのCosmos SDKアプリケーションに組み込まれる](./app-complete.md)されるために必要な全てを持っています！

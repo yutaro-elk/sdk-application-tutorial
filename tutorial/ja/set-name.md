@@ -2,7 +2,7 @@
 
 ## `メッセージ`
 
-SDKの `Msgs`の命名規則は` Msg {.Action} `です。実装する最初のアクションは `SetName`ですので、それを` MsgSetName`と呼びます。この `Msg`は名前の所有者がリゾルバ内でその名前の戻り値を設定することを可能にします。 `。/ x / nameservice / msgs.go`という名前の新しいファイルに` MsgSetName`を定義することから始めます。
+SDKの `Msgs`の命名規則は` Msg {.Action} `です。実装する最初のアクションは `SetName`ですので、それを` MsgSetName`と呼びます。この `Msg`は名前の所有者がリゾルバ内でその名前の戻り値を設定することを可能にします。 `./x/nameservice/msgs.go`という名前の新しいファイルに` MsgSetName`を定義することから始めます。
 
 ```go
 package nameservice
@@ -89,7 +89,7 @@ func (msg MsgSetName) GetSigners() []sdk.AccAddress {
 
 `MsgSetName`が指定されたので、次のステップはこのメッセージが受信された時にとるべき行動を定義することです。これが `handler`の役割です。
 
-新しいファイル（ `。/ x / nameservice / handler.go`）では、以下のコードで始めます。
+新しいファイル( `./x/nameservice/handler.go`)では、以下のコードで始めます。
 
 ```go
 package nameservice
@@ -118,7 +118,7 @@ func NewHandler(keeper Keeper) sdk.Handler {
 
 さて、 `handleMsgSetName`で` MsgSetName`メッセージを処理するための実際のロジックを定義する必要があります。
 
-> _ * NOTE * _：SDKのハンドラ名の命名規則は `handleMsg {.Action}`です。
+> _*NOTE*_：SDKのハンドラ名の命名規則は `handleMsg {.Action}`です。
 
 ```go
 // Handle a message to set name
@@ -131,6 +131,6 @@ func handleMsgSetName(ctx sdk.Context, keeper Keeper, msg MsgSetName) sdk.Result
 }
 ```
 
-この関数では、 `Msg`送信者が実際に名前の所有者（` keeper.GetOwner`）であるかどうか確認してください。もしそうなら、彼らは `Keeper`の関数を呼び出すことによって名前を設定することができます。そうでない場合は、エラーをスローしてそれをユーザーに返します。
+この関数では、 `Msg`送信者が実際に名前の所有者(` keeper.GetOwner`)であるかどうか確認してください。もしそうなら、彼らは `Keeper`の関数を呼び出すことによって名前を設定することができます。そうでない場合は、エラーをスローしてそれをユーザーに返します。
 
 ###すばらしい、今所有者は `SetName`sを持つことができます！しかし、名前にまだ所有者がいない場合はどうなりますか？あなたのモジュールは、ユーザが名前を買うための方法を必要としています！定義しましょう[`BuyName`メッセージを定義します](./buy-name.md).
