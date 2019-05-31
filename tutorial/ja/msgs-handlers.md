@@ -1,10 +1,10 @@
-# Msgs and Handlers
+＃メッセージとハンドラ
 
-Now that you have the `Keeper` setup, it is time to build the `Msgs` and `Handlers` that actually allow users to buy names and set values for them.
+`Keeper`セットアップができたので、今度は実際にユーザーが名前を購入してそれらに値を設定できるようにする` Msgs`と `Handlers`を構築します。
 
-## `Msgs`
+## `メッセージ`
 
-`Msgs` trigger state transitions. `Msgs` are wrapped in [`Txs`](https://github.com/cosmos/cosmos-sdk/blob/develop/types/tx_msg.go#L34-L38) that clients submit to the network. The Cosmos SDK wraps and unwraps `Msgs` from `Txs`, which means, as an app developer, you only have to define `Msgs`. `Msgs` must satisfy the following interface (we'll implement all of these in the next section):
+`Msgs`は状態遷移を引き起こします。 `Msgs`はクライアントがネットワークに送信する[` Txs`]（https://github.com/cosmos/cosmos-sdk/blob/develop/types/tx_msg.go#L34-L38）にラップされています。 Cosmos SDKは、 `Txs`から` Msgs`をラップしたりアンラップしたりします。つまり、アプリ開発者としては、Msgsを定義するだけで済みます。 `Msgs`は次のインターフェースを満たさなければなりません（これらはすべて次のセクションで実装します）。
 
 ```go
 // Transactions messages must fulfill the Msg
@@ -31,10 +31,10 @@ type Msg interface {
 }
 ```
 
-## `Handlers`
+## `ハンドラ`
 
-`Handlers` define the action that needs to be taken (which stores need to get updated, how, and under what conditions) when a given `Msg` is received.
+`Handlers`は与えられた` Msg`が受信された時にとるべきアクション（どのストアを更新する必要があるか、どのように、そしてどんな条件下で）を定義します。
 
-In this module you have two types of `Msgs` that users can send to interact with the application state: [`SetName`](set-name.md) and [`BuyName`](./buy-name.md). They will each have an associated `Handler`.
+このモジュールには、ユーザがアプリケーションの状態とやり取りするために送信できる2種類の `Msgs`があります：[` SetName`]（set-name.md）と[`BuyName`]（./ buy-name.md）です。それらはそれぞれ関連する `Handler`を持ちます。
 
-### Now that you have a better understanding of `Msgs` and `Handlers`, you can start building your first message: [`SetName`](set-name.md).
+###これで `Msgs`と` Handlers`の理解が深まったので、最初のメッセージを作り始めることができます：[`SetName`](set-name.md)。

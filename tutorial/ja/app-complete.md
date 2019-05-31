@@ -1,8 +1,8 @@
-# Import your modules and finish your application
+＃モジュールをインポートしてアプリケーションを完成させる
 
-Now that your module is ready, it can be incorporated in the `./app.go` file, along with the other two modules [`auth`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/auth) and [`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank):
+モジュールの準備ができたので、他の2つのモジュールと共に `。/ app.go`ファイルに組み込むことができます[` auth`]（https://godoc.org/github.com/cosmos/cosmos- sdk / x / auth）および[`bank`]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank）：
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial/x/nameservice`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }/x/nameservice`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
 
 ```go
 package app
@@ -28,7 +28,7 @@ import (
 )
 ```
 
-Next you need to add the stores' keys as well as the `Keepers` in your `nameServiceApp` struct, and update the constructor accordingly
+次に、 `nameServiceApp`構造体に` Keepers`とストアのキーを追加し、それに応じてコンストラクタを更新する必要があります。
 
 ```go
 
@@ -80,16 +80,16 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 }
 ```
 
-At this point, the constructor still lacks important logic. Namely, it needs to:
+現時点では、コンストラクタにはまだ重要なロジックがありません。つまり、次のことが必要です。
 
-- Instantiate required `Keepers` from each desired module.
-- Generate `storeKeys` required by each `Keeper`.
-- Register `Handler`s from each module. The `AddRoute()` method from `baseapp`'s `router` is used to this end.
-- Register `Querier`s from each module. The `AddRoute()` method from `baseapp`'s `queryRouter` is used to this end.
-- Mount `KVStore`s to the provided keys in the `baseApp` multistore.
-- Set the `initChainer` for defining the initial application state.
+ - 必要な各モジュールから必要な `Keepers`をインスタンス化します。
+ - それぞれの `Keeper`が必要とする` storeKeys`を生成します。
+ - 各モジュールから `Handler`を登録します。このためには `baseapp`の` router`の `AddRoute（）`メソッドを使います。
+ - 各モジュールからQuerierを登録します。このためには `baseapp`の` queryRouter`の `AddRoute（）`メソッドを使います。
+ -  `baseApp`マルチストアで提供されたキーに` KVStore`をマウントします。
+ - 初期アプリケーション状態を定義するための `initChainer`を設定します。
 
-Your finalized constructor should look like this:
+完成したコンストラクタは次のようになります。
 
 ```go
 // NewNameServiceApp is a constructor function for nameServiceApp
@@ -178,11 +178,11 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 }
 ```
 
-> _*NOTE*_: The TransientStore mentioned above is an in-memory implementation of the KVStore for state that is not persisted.
+> _ * NOTE * _：上記のTransientStoreは、永続化されていない状態のKVStoreのメモリ内実装です。
 
-The `initChainer` defines how accounts in `genesis.json` are mapped into the application state on initial chain start. The `ExportAppStateAndValidators` function helps bootstrap the initial state for the application. You don't need to worry too much about either of these for now.
+`initChainer`は最初のチェーンスタート時に` genesis.json`のアカウントがどのようにアプリケーション状態にマッピングされるかを定義します。 `ExportAppStateAndValidators`関数はアプリケーションの初期状態をブートストラップするのを助けます。今のところ、これらについてどちらも心配する必要はありません。
 
-The constructor registers the `initChainer` function, but it isn't defined yet. Go ahead and create it:
+コンストラクタは `initChainer`関数を登録しますが、まだ定義されていません。先に進んでそれを作成してください。
 
 ```go
 // GenesisState represents chain state at the start of the chain. Any initial state (account balances) are stored here.
@@ -244,7 +244,7 @@ func (app *nameServiceApp) ExportAppStateAndValidators() (appState json.RawMessa
 }
 ```
 
-Finally add a helper function to generate an amino [`*codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec) that properly registers all of the modules used in your application:
+最後に、あなたので使われているすべてのモジュールを正しく登録するアミノ[`* codec.Codec`]（https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec）を生成するためのヘルパー関数を追加します。応用：
 
 ```go
 // MakeCodec generates the necessary codecs for Amino
@@ -260,4 +260,4 @@ func MakeCodec() *codec.Codec {
 }
 ```
 
-### Now that you have created an application that includes your module, it's time to [build your entrypoints](entrypoint.md)!
+###あなたのモジュールを含むアプリケーションを作成したので、[エントリポイントを構築](entrypoint.md)しましょう。

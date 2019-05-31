@@ -1,10 +1,10 @@
-# Building and running the application
+＃アプリケーションの構築と実行
 
-## Building the `nameservice` application
+## `nameservice`アプリケーションを構築する
 
-If you want to build the `nameservice` application in this repo to see the functionalities, **Go 1.12.1+** is required .
+機能を確認するためにこのリポジトリで `nameservice`アプリケーションを構築したい場合は** Go 1.12.1 + **が必要です。
 
-Add some parameters to environment is necessary if you have never used the `go mod` before.
+これまでに `go mod`を使ったことがないのであれば、environmentにいくつかのパラメータを追加する必要があります。
 
 ```bash
 mkdir -p $HOME/go/bin
@@ -15,7 +15,7 @@ echo "export GO111MODULE=on" >> ~/.bash_profile
 source ~/.bash_profile
 ```
 
-Now, you can install and run the application.
+これで、アプリケーションをインストールして実行することができます。
 
 ```bash
 # Install the app into your $GOBIN
@@ -26,15 +26,15 @@ nsd help
 nscli help
 ```
 
-## Running the live network and using the commands
+##ライブネットワークを実行してコマンドを使用する
 
-To initialize configuration and a `genesis.json` file for your application and an account for the transactions, start by running:
+あなたのアプリケーションのための設定と `genesis.json`ファイルとトランザクションのためのアカウントを初期化するために、実行することから始めてください：
 
-> _*NOTE*_: In the below commands addresses are are pulled using terminal utilities. You can also just input the raw strings saved from creating keys, shown below. The commands require [`jq`](https://stedolan.github.io/jq/download/) to be installed on your machine.
+> _ * NOTE * _：以下のコマンドでは、アドレスは端末ユーティリティを使って引き出されます。以下に示すように、キーの作成から保存された生の文字列を入力することもできます。コマンドはあなたのマシンに[`jq`]（https://stedolan.github.io/jq/download/）がインストールされていることを必要とします。
 
-> _*NOTE*_: If you have run the tutorial before, you can start from scratch with a `nsd unsafe-reset-all` or by deleting both of the home folders `rm -rf ~/.ns*`
+> _ * NOTE * _：以前にチュートリアルを実行したことがあるなら、最初から `nsd unsafe-reset-all`を使うか、両方のホームフォルダ` rm -rf〜/ .ns * `を削除することで始めることができます。
 
-> _*NOTE*_: If you have the Cosmos app for ledger and you want to use it, when you create the key with `nscli keys add jack` just add `--ledger` at the end. That's all you need. When you sign, `jack` will be recognized as a Ledger key and will require a device. 
+> _ * NOTE * _：レジャー用のCosmosアプリを持っていてそれを使いたい場合、 `nscli keys add jack`でキーを作成するときに最後に` --ledger`を追加するだけです。必要なものはこれだけです。サインインすると、 `jack`は元帳キーとして認識され、デバイスが必要になります。
 
 ```bash
 # Initialize configuration files and genesis file
@@ -58,9 +58,9 @@ nscli config indent true
 nscli config trust-node true
 ```
 
-You can now start `nsd` by calling `nsd start`. You will see logs begin streaming that represent blocks being produced, this will take a couple of seconds.
+これで `nsd start`を呼び出して` nsd`を起動することができます。生成中のブロックを表すログのストリーミングが開始されます。これには数秒かかります。
 
-Open another terminal to run commands against the network you have just created:
+作成したネットワークに対してコマンドを実行するには、別の端末を開きます。
 
 ```bash
 # First check the accounts to ensure they have funds
@@ -85,4 +85,4 @@ nscli query nameservice whois jack.id
 nscli tx nameservice buy-name jack.id 10nametoken --from alice 
 ```
 
-### Congratulations, you have built a Cosmos SDK application! This tutorial is now complete. If you want to see how to run the same commands using the REST server [click here](run-rest.md).
+###おめでとうございます、Cosmos SDKアプリケーションを作成しました。このチュートリアルはこれで完了です。 RESTサーバーを使って同じコマンドを実行する方法を知りたい場合は[ここをクリック](run-rest.md)。

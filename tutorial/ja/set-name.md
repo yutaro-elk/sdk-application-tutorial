@@ -1,8 +1,8 @@
-# SetName
+＃SetName
 
-## `Msg`
+## `メッセージ`
 
-The naming convention for the SDK `Msgs` is `Msg{ .Action }`. The first action to implement is `SetName`, so we'll call it `MsgSetName`. This `Msg` allows the owner of a name to set the return value for that name within the resolver. Start by defining `MsgSetName` in a new file called `./x/nameservice/msgs.go`:
+SDKの `Msgs`の命名規則は` Msg {.Action} `です。実装する最初のアクションは `SetName`ですので、それを` MsgSetName`と呼びます。この `Msg`は名前の所有者がリゾルバ内でその名前の戻り値を設定することを可能にします。 `。/ x / nameservice / msgs.go`という名前の新しいファイルに` MsgSetName`を定義することから始めます。
 
 ```go
 package nameservice
@@ -30,13 +30,13 @@ func NewMsgSetName(name string, value string, owner sdk.AccAddress) MsgSetName {
 }
 ```
 
-The `MsgSetName` has the three attributes needed to set the value for a name:
+`MsgSetName`は名前の値を設定するのに必要な3つの属性を持ちます。
 
-- `name` - The name trying to be set.
-- `value` - What the name resolves to.
-- `owner` - The owner of that name.
+ -  `name`  - 設定しようとしている名前。
+ -  `value`  - 名前が解決するもの
+ -  `owner`  - その名前の所有者。
 
-Next, implement the `Msg` interface:
+次に `Msg`インターフェースを実装します。
 
 ```go
 // Route should return the name of the module
@@ -46,7 +46,7 @@ func (msg MsgSetName) Route() string { return "nameservice" }
 func (msg MsgSetName) Type() string { return "set_name"}
 ```
 
-The above functions are used by the SDK to route `Msgs` to the proper module for handling. They also add human readable names to database tags used for indexing.
+上記の関数はSDKによって `Msgs`を適切なモジュールにルーティングして処理するために使用されます。また、索引付けに使用されるデータベースタグに、判読可能な名前を追加しています。
 
 ```go
 // ValidateBasic runs stateless checks on the message
@@ -61,7 +61,7 @@ func (msg MsgSetName) ValidateBasic() sdk.Error {
 }
 ```
 
-`ValidateBasic` is used to provide some basic **stateless** checks on the validity of the `Msg`. In this case, check that none of the attributes are empty. Note the use of the `sdk.Error` types here. The SDK provides a set of error types that are frequently encountered by application developers.
+`ValidateBasic`は` Msg`の妥当性についてのいくつかの基本的な**ステートレス**チェックを提供するために使用されます。この場合は、どの属性も空でないことを確認してください。ここでは `sdk.Error`型の使用に注意してください。 SDKは、アプリケーション開発者が頻繁に遭遇する一連のエラータイプを提供します。
 
 ```go
 // GetSignBytes encodes the message for signing
@@ -74,7 +74,7 @@ func (msg MsgSetName) GetSignBytes() []byte {
 }
 ```
 
-`GetSignBytes` defines how the `Msg` gets encoded for signing. In most cases this means marshal to sorted JSON. The output should not be modified.
+`GetSignBytes`は署名のために` Msg`がどのようにエンコードされるかを定義します。ほとんどの場合、これはソートされたJSONへの整列化を意味します。出力は変更しないでください。
 
 ```go
 // GetSigners defines whose signature is required
@@ -83,13 +83,13 @@ func (msg MsgSetName) GetSigners() []sdk.AccAddress {
 }
 ```
 
-`GetSigners` defines whose signature is required on a `Tx` in order for it to be valid. In this case, for example, the `MsgSetName` requires that the `Owner` signs the transaction when trying to reset what the name points to.
+`GetSigners`は、それが有効であるために誰の署名が` Tx`に要求されるかを定義します。この場合、例えば、 `MsgSetName`は名前が指すものをリセットしようとするときに` Owner`がトランザクションに署名することを要求します。
 
-## `Handler`
+## `ハンドラ`
 
-Now that `MsgSetName` is specified, the next step is to define what action(s) needs to be taken when this message is received. This is the role of the `handler`.
+`MsgSetName`が指定されたので、次のステップはこのメッセージが受信された時にとるべき行動を定義することです。これが `handler`の役割です。
 
-In a new file (`./x/nameservice/handler.go`) start with the following code:
+新しいファイル（ `。/ x / nameservice / handler.go`）では、以下のコードで始めます。
 
 ```go
 package nameservice
@@ -114,11 +114,11 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 ```
 
-`NewHandler` is essentially a sub-router that directs messages coming into this module to the proper handler. At the moment, there is only one `Msg`/`Handler`.
+`NewHandler`は本質的にこのモジュールに入ってくるメッセージを適切なハンドラに送るサブルータです。現時点では、 `Msg` /` Handler`は1つだけです。
 
-Now, you need to define the actual logic for handling the `MsgSetName` message in `handleMsgSetName`:
+さて、 `handleMsgSetName`で` MsgSetName`メッセージを処理するための実際のロジックを定義する必要があります。
 
-> _*NOTE*_: The naming convention for handler names in the SDK is `handleMsg{ .Action }`
+> _ * NOTE * _：SDKのハンドラ名の命名規則は `handleMsg {.Action}`です。
 
 ```go
 // Handle a message to set name
@@ -131,6 +131,6 @@ func handleMsgSetName(ctx sdk.Context, keeper Keeper, msg MsgSetName) sdk.Result
 }
 ```
 
-In this function, check to see if the `Msg` sender is actually the owner of the name (`keeper.GetOwner`). If so, they can set the name by calling the function on the `Keeper`. If not, throw an error and return that to the user.
+この関数では、 `Msg`送信者が実際に名前の所有者（` keeper.GetOwner`）であるかどうか確認してください。もしそうなら、彼らは `Keeper`の関数を呼び出すことによって名前を設定することができます。そうでない場合は、エラーをスローしてそれをユーザーに返します。
 
-### Great, now owners can `SetName`s! But what if a name doesn't have an owner yet? Your module needs a way for users to buy names! Let us define [define the `BuyName` message](./buy-name.md).
+###すばらしい、今所有者は `SetName`sを持つことができます！しかし、名前にまだ所有者がいない場合はどうなりますか？あなたのモジュールは、ユーザが名前を買うための方法を必要としています！定義しましょう[`BuyName`メッセージを定義します](./buy-name.md).

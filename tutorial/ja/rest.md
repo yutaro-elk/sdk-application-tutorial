@@ -1,12 +1,12 @@
-# Nameservice Module Rest Interface
+＃ネームサービスモジュール休息インタフェース
 
-You module can also expose a REST interface to allow programatic access to the module's functionality. To get started create a file to hold the HTTP handlers:
+あなたのモジュールは、モジュールの機能へのプログラムによるアクセスを可能にするためにRESTインターフェースを公開することもできます。はじめに、HTTPハンドラを保持するファイルを作成します。
 
-- `./x/nameservice/client/rest/rest.go`
+ -  `。/ x / nameservice / client / rest / rest.go`
 
-Add in the `imports` and `const`s to get started:
+始めるために `imports`と` const`を追加してください：
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial/x/nameservice`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }/x/nameservice`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
 
 ```go
 package rest
@@ -32,7 +32,7 @@ const (
 
 ### RegisterRoutes
 
-First, define the REST client interface for your module in a `RegisterRoutes` function. Have the routes all start with your module name to prevent name space collisions with other modules' routes:
+まず、 `RegisterRoutes`関数であなたのモジュール用のRESTクライアントインターフェースを定義します。名前空間が他のモジュールのルートと衝突しないように、すべてのルートを自分のモジュール名で始めます。
 
 ```go
 // RegisterRoutes - Central function to define routes that get registered by the main application
@@ -44,9 +44,9 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router, cdc *codec.Codec, 
 }
 ```
 
-### Query Handlers
+###クエリハンドラ
 
-Next, its time to define the handlers mentioned above. These will be very similar to the CLI methods defined earlier. Start with the queries `whois` and `resolve`:
+次に、上記のハンドラを定義します。これらは前に定義したCLIメソッドと非常によく似ています。クエリ `whois`と` resolve`から始めましょう：
 
 ```go
 func resolveNameHandler(cdc *codec.Codec, cliCtx context.CLIContext, storeName string) http.HandlerFunc {
@@ -92,14 +92,14 @@ func namesHandler(cdc *codec.Codec, cliCtx context.CLIContext, storeName string)
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- Notice we are using the same `cliCtx.QueryWithData` function to fetch the data
-- These functions are almost the same as the corresponding CLI functionality
+ - データを取得するために同じ `cliCtx.QueryWithData`関数を使っていることに注意してください
+ - これらの機能は、対応するCLI機能とほぼ同じです。
 
-### Tx Handlers
+### Txハンドラ
 
-Now define the `buyName` and `setName` transaction routes. Notice these aren't actually sending the transactions to buy and set names. That would require sending a password along with the request which would be a security issue. Instead these endpoints build and return each specific transaction which can then be signed in a secure manner and afterwards broadcast to the network using a standard endpoint like `/txs`.
+では `buyName`と` setName`トランザクションルートを定義しましょう。これらが実際に購入して名前を設定するトランザクションを送信していないことに注意してください。それはセキュリティ問題であるであろう要求と共にパスワードを送ることを必要とするでしょう。代わりに、これらのエンドポイントはそれぞれの特定のトランザクションを構築して返します。その後、それらは安全な方法で署名され、その後に `/ txs`のような標準のエンドポイントを使ってネットワークにブロードキャストされます。
 
 ```go
 type buyNameReq struct {
@@ -185,9 +185,9 @@ func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- The [`BaseReq`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq) contains the basic required fields for making a transaction (which key to use, how to decode it, which chain you are on, etc...) and is designed to be embedded as shown.
-- `baseReq.ValidateBasic` and `clientrest.CompleteAndBroadcastTxREST` handle setting the response code for you and therefore you don't need to worry about handling errors or successes when using those functions.
+ -  [`BaseReq`]（https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq）には、トランザクションを作成するための基本的な必須フィールド（使用するキー、デコード方法）が含まれています。それは、あなたがどのチェーンにいるのかなど...そして示されているように埋め込まれるように設計されています。
+ -  `baseReq.ValidateBasic`と` clientrest.CompleteAndBroadcastTxREST`はレスポンスコードの設定をあなたに代わって処理するので、これらの関数を使うときにエラーや成功を処理することについて心配する必要はありません。
 
-### Now your module has everything it needs to be [incorporated into your Cosmos SDK application](./app-complete.md)!
+###今すぐあなたのモジュールはそれが[あなたのCosmos SDKアプリケーションに組み込まれる](./app-complete.md)されるために必要な全てを持っています！

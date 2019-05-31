@@ -1,6 +1,6 @@
-# Codec File
+＃コーデックファイル
 
-To [register your types with Amino](https://github.com/tendermint/go-amino#registering-types) so that they can be encoded/decoded, there is a bit of code that needs to be placed in `./x/nameservice/codec.go`. Any interface you create and any struct that implements an interface needs to be declared in the `RegisterCodec` function. In this module the two `Msg` implementations (`SetName` and `BuyName`) need to be registered, but your `Whois` query return type does not:
+型をAminoに登録する（https://github.com/tendermint/go-amam#registering-types）ようにするために、それらをエンコード/デコードできるようにするには、 `に入れる必要があるコードが少しあります。 / x / nameservice / codec.go`。あなたが作成したインターフェースやインターフェースを実装する構造体は `RegisterCodec`関数で宣言する必要があります。このモジュールでは、2つの `Msg`実装（` SetName`と `BuyName`）を登録する必要がありますが、あなたの` Whois`クエリの戻り型はそうではありません：
 
 ```go
 package nameservice
@@ -16,4 +16,4 @@ func RegisterCodec(cdc *codec.Codec) {
 }
 ```
 
-### Next you need to define [CLI interactions](./cli.md) with your module.
+###次に、あなたは自分のモジュールで[CLI interaction](./cli.md)を定義する必要があります。

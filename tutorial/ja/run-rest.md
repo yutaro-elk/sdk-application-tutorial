@@ -1,21 +1,21 @@
-# Run REST routes
+＃RESTルートを実行する
 
-Now that you tested your CLI queries and transactions, time to test same things in the REST server. Leave the `nsd` that you had running earlier and start by gathering your addresses:
+CLIクエリとトランザクションをテストしたので、今度はRESTサーバーで同じことをテストします。以前に実行していた `nsd`をそのままにして、あなたのアドレスを集めることから始めましょう：
 
 ```bash
 $ nscli keys show jack --address
 $ nscli keys show alice --address
 ```
 
-Now its time to start the `rest-server` in another terminal window:
+今度は別の端末ウィンドウで `rest-server`を起動します。
 
 ```bash
 $ nscli rest-server --chain-id namechain --trust-node
 ```
 
-Then you can construct and run the following queries:
+その後、次のクエリを作成して実行できます。
 
-> NOTE: Be sure to substitute your password and buyer/owner addresses for the ones listed below!
+>注：以下に記載されているものを、パスワードと購入者/所有者のアドレスに置き換えてください。
 
 ```bash
 # Get the sequence and account numbers for jack to construct the below requests
@@ -49,9 +49,9 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 # > {"check_tx":{"gasWanted":"200000","gasUsed":"1264"},"deliver_tx":{"log":"Msg 0: ","gasWanted":"200000","gasUsed":"4509","tags":[{"key":"YWN0aW9u","value":"YnV5X25hbWU="}]},"hash":"81A371392B52F703266257D524538085F8C749EE3CBC1C579873632EFBAFA40C","height":"70"}
 ```
 
-### Request Schemas:
+###リクエストスキーマ：
 
-#### `POST /nameservice/names` BuyName Request Body:
+#### `POST / nameservice / names` BuyNameリクエストボディ：
 ```json
 {
   "base_req": {
@@ -69,7 +69,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 }
 ```
 
-#### `PUT /nameservice/names` SetName Request Body:
+#### `PUT /nameservice/names` SetNameリクエストボディ：
 ```json
 {
   "base_req": {
@@ -87,4 +87,4 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 }
 ```
 
-### [Back to start of tutorial](./README.md)
+### [チュートリアルの始めに戻る](./README.md)

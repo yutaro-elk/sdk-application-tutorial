@@ -1,8 +1,8 @@
-# Buy Name
+＃購入名
 
-## Msg
+##メッセージ
 
-Now it is time to define the `Msg` for buying names and add it to the `./x/nameservice/msgs.go` file. This code is very similar to `SetName`:
+今度は名前を購入するための `Msg`を定義し、それを`。/ x / nameservice / msgs.go`ファイルに追加します。このコードは `SetName`と非常によく似ています。
 
 ```go
 // MsgBuyName defines the BuyName message
@@ -55,8 +55,7 @@ func (msg MsgBuyName) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Buyer}
 }
 ```
-
-Next, in the `./x/nameservice/handler.go` file, add the `MsgBuyName` handler to the module router:
+次に、 `。/ x / nameservice / handler.go`ファイルで、モジュールルーターに` MsgBuyName`ハンドラーを追加します。
 
 ```go
 // NewHandler returns a handler for "nameservice" type messages.
@@ -75,7 +74,7 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 ```
 
-Finally, define the `BuyName` `handler` function which performs the state transitions triggered by the message. Keep in mind that at this point the message has had its `ValidateBasic` function run so there has been some input verification. However, `ValidateBasic` cannot query application state. Validation logic that is dependent on network state (e.g. account balances) should be performed in the `handler` function.
+最後に、メッセージによって引き起こされる状態遷移を実行する `BuyName`` handler`関数を定義します。この時点でメッセージは `ValidateBasic`関数を実行しているので、何らかの入力検証があったことを覚えておいてください。しかし、 `ValidateBasic`はアプリケーションの状態を問い合わせることはできません。ネットワークの状態に依存する検証ロジック（例えば口座残高）は `handler`関数で実行されるべきです。
 
 ```go
 // Handle a message to buy name
@@ -100,13 +99,13 @@ func handleMsgBuyName(ctx sdk.Context, keeper Keeper, msg MsgBuyName) sdk.Result
 }
 ```
 
-First check to make sure that the bid is higher than the current price. Then, check to see whether the name already has an owner. If it does, the former owner will receive the money from the `Buyer`.
+まず入札が現在の価格より高いことを確認してください。次に、名前にすでに所有者があるかどうかを確認します。もしそうであれば、前の所有者は「買い手」からお金を受け取る。
 
-If there is no owner, your `nameservice` module "burns" (i.e. sends to an unrecoverable address) the coins from the `Buyer`.
+所有者がいない場合、あなたの `nameservice`モジュールは` Buyer`からのコインを「燃やし」ます（すなわち回復不可能なアドレスに送ります）。
 
-If either `SubtractCoins` or `SendCoins` returns a non-nil error, the handler throws an error, reverting the state transition. Otherwise, using the getters and setters defined on the `Keeper` earlier, the handler sets the buyer to the new owner and sets the new price to be the current bid.
+`SubtractCoins`または` SendCoins`がnil以外のエラーを返すと、ハンドラはエラーをスローして状態遷移を元に戻します。そうでなければ、 `Keeper`で以前に定義されたゲッターとセッターを使って、ハンドラーは買い手を新しい所有者に設定し、新しい価格を現在の入札に設定します。
 
-> _*NOTE*_: This handler uses functions from the `coinKeeper` to perform currency operations. If your application is performing currency operations you may want to take a look at the [godocs for this module](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#BaseKeeper) to see what functions it exposes.
+> _ * NOTE * _：このハンドラは `coinKeeper`の関数を使って通貨操作を行います。アプリケーションが通貨操作を実行している場合は、[このモジュールのgodocs]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#BaseKeeper）を参照してください。それが公開する機能。
 
-### Now that you have your `Msgs` and `Handlers` defined it's time to learn about making the data from these transactions [available for querying](queriers.md)!
+###あなたの `Msgs`と` Handlers`が定義されたので、これらのトランザクションからデータを作ることについて学ぶ時が来ました[問い合わせに利用可能](queriers.md)!
 

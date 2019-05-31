@@ -1,14 +1,14 @@
-# Nameservice Module CLI
+＃ネームサービスモジュールCLI
 
-The Cosmos SDK uses the [`cobra`](https://github.com/spf13/cobra) library for CLI interactions. This library makes it easy for each module to expose its own commands. To get started defining the user's CLI interactions with your module, create the following files:
+Cosmos SDKはCLI対話のために[`cobra`]（https://github.com/spf13/cobra）ライブラリを使用します。このライブラリは、各モジュールが独自のコマンドを公開するのを簡単にします。モジュールとユーザーのCLIのやり取りを定義するには、まず以下のファイルを作成します。
 
-- `./x/nameservice/client/cli/query.go`
-- `./x/nameservice/client/cli/tx.go`
-- `./x/nameservice/client/module_client.go`
+ -  `。/ x / nameservice / client / cli / query.go`
+ -  `。/ x / nameservice / client / cli / tx.go`
+ -  `。/ x / nameservice / client / module_client.go`
 
-## Queries
+##クエリ
 
-Start in `query.go`. Here, define `cobra.Command`s for each of your modules `Queriers` (`resolve`, and `whois`):
+`query.go`から始めてください。ここで、各モジュールのQueriersに `cobra.Command`を定義します（` resolve`と `whois`）：
 
 ```go
 package cli
@@ -91,20 +91,20 @@ func GetCmdNames(queryRoute string, cdc *codec.Codec) *cobra.Command {
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- The CLI introduces a new `context`: [`CLIContext`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext). It carries data about user input and application configuration that are needed for CLI interactions.
-- The `path` required for the `cliCtx.QueryWithData()` function maps directly to the names in your query router.
-  - The first part of the path is used to differentiate the types of queries possible to SDK applications: `custom` is for `Queriers`.
-  - The second piece (`nameservice`) is the name of the module to route the query to.
-  - Finally there is the specific querier in the module that will be called.
-  - In this example the fourth piece is the query. This works because the query parameter is a simple string. To enable more complex query inputs you need to use the second argument of the [`.QueryWithData()`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext.QueryWithData) function to pass in `data`. For an example of this see the [queriers in the Staking module](https://github.com/cosmos/cosmos-sdk/blob/develop/x/stake/querier/querier.go#L103).
+ -  CLIは新しい `context`を導入しました：[` CLIContext`]（https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext）。 CLIとの対話に必要なユーザー入力およびアプリケーション構成に関するデータを運びます。
+ -  `cliCtx.QueryWithData（）`関数に必要な `path`はあなたの問い合わせルーターの名前に直接対応します。
+   - パスの最初の部分は、SDKアプリケーションで可能なクエリの種類を区別するために使用されます。 `custom`は` Queriers`のためのものです。
+   -  2番目の部分（ `nameservice`）は問い合わせを送る先のモジュールの名前です。
+   - 最後に、呼び出されるモジュール内に特定のクエリアがあります。
+   - この例では、4番目の部分はクエリです。 queryパラメータは単純な文字列なので、これはうまくいきます。より複雑なクエリ入力を可能にするには、[`.QueryWithData（）`]の2番目の引数を使用する必要があります（https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext.QueryWithData） `data`を渡すための関数。この例については、[Stakingモジュールのクエリア]（https://github.com/cosmos/cosmos-sdk/blob/develop / x / stake / querier / querier.go#L103）を参照してください。
 
-## Transactions
+##トランザクション
 
-Now that the query interactions are defined, it is time to move on to transaction generation in `tx.go`:
+クエリのやりとりが定義されたので、 `tx.go`のトランザクション生成に移ります。
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial/x/nameservice`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }/x/nameservice`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
 
 ```go
 package cli
@@ -183,15 +183,15 @@ func GetCmdSetName(cdc *codec.Codec) *cobra.Command {
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- The `authcmd` package is used here. [The godocs have more information on usage](https://godoc.org/github.com/cosmos/cosmos-sdk/x/auth/client/cli#GetAccountDecoder). It provides access to accounts controlled by the CLI and facilitates signing.
+ - ここでは `authcmd`パッケージが使われています。 [使い方の詳細についてはgodocsにあります]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/auth/client/cli#GetAccountDecoder）。 CLIによって制御されているアカウントへのアクセスを提供し、署名を容易にします。
 
-## Module Client
+##モジュールクライアント
 
-The final piece to export this functionality is called the `ModuleClient` and goes in `./x/nameservice/client/module_client.go`. [Module clients](https://godoc.org/github.com/cosmos/cosmos-sdk/types#ModuleClients) provide a standard way for modules to export client functionality.
+この機能をエクスポートする最後の部分は `ModuleClient`と呼ばれ、`。/ x / nameservice / client / module_client.go`に入ります。 [モジュールクライアント]（https://godoc.org/github.com/cosmos/cosmos-sdk/types#ModuleClients）は、モジュールがクライアント機能をエクスポートするための標準的な方法を提供します。
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial/x/nameservice`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }/x/nameservice`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial / x / nameservice`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo} / x / nameservice`）。
 
 ```go
 package client
@@ -245,9 +245,9 @@ func (mc ModuleClient) GetTxCmd() *cobra.Command {
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- This abstraction allows clients to import the client functionality from your module in a standard way. You will see this when we [build the entrypoints](entrypoint.md)
-- There is an [open issue](https://github.com/cosmos/cosmos-sdk/issues/2955) to add the rest functionality (described in the next part of this tutorial) to this interface as well.
+ - この抽象化により、クライアントは標準の方法でモジュールからクライアント機能をインポートできます。これは、エントリポイントを構築するとき（entrypoint.md）に表示されます。
+ - このインタフェースに残りの機能（このチュートリアルの次の部分で説明）を追加するための[未解決の問題]（https://github.com/cosmos/cosmos-sdk/issues/2955）もあります。
 
-### Now your ready to define [the routes that the REST client will use to communicate with your module](rest.md)!
+###これで[RESTクライアントがあなたのモジュールと通信するために使用するルート](rest.md)を定義する準備が整いました。

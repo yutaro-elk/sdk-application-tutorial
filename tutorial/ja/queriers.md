@@ -1,11 +1,11 @@
 # Queriers
 
-Start by creating the `./x/nameservice/querier.go` file. This is the place to define which queries against application state users will be able to make. Your `nameservice` module will expose two queries:
+`。/ x / nameservice / querier.go`ファイルを作成することから始めます。これは、アプリケーション状態のユーザーに対してどのクエリを実行できるかを定義する場所です。あなたの `nameservice`モジュールは二つのクエリを公開します：
 
-- `resolve`: This takes a `name` and returns the `value` that is stored by the `nameservice`. This is similar to a DNS query.
-- `whois`: This takes a `name` and returns the `price`, `value`, and `owner` of the name. Used for figuring out how much names cost when you want to buy them.
+ -  `resolve`：これは` name`を取り、 `nameservice`によって格納されている` value`を返します。これはDNSクエリに似ています。
+ -  `whois`：これは` name`を取り、その名前の `price`、` value`、そして `owner`を返します。あなたがそれらを購入したいときにいくらの名前がかかるかを把握するために使用されます。
 
-Start by defining the `NewQuerier` function which acts as a sub-router for queries to this module (similar the `NewHandler` function). Note that because there isn't an interface similar to `Msg` for queries, you need to manually define switch statement cases (they can't be pulled off of the query `.Route()` function):
+このモジュールへの問い合わせのためのサブルーターとして機能する `NewQuerier`関数を定義することから始めます（` NewHandler`関数に似ています）。クエリ用の `Msg`に似たインターフェースはないので、switchステートメントのケースを手動で定義する必要があります（クエリの` .Route（） `関数から引き出すことはできません）。
 
 ```go
 package nameservice
@@ -44,7 +44,7 @@ func NewQuerier(keeper Keeper) sdk.Querier {
 }
 ```
 
-Now that the router is defined, define the inputs and responses for each query:
+ルータが定義されたので、各クエリの入力と応答を定義します。
 
 ```go
 // nolint: unparam
@@ -123,12 +123,12 @@ func (n QueryResNames) String() string {
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- Here your `Keeper`'s getters and setters come into heavy use. When building any other applications that use this module you may need to go back and define more getters/setters to access the pieces of state you need.
-- By convention, each output type should be something that is both JSON marshallable and stringable (implements the Golang `fmt.Stringer` interface).  The returned bytes should be the JSON encoding of the output result.
-  - So for the output type of `resolve` we wrap the resolution string in a struct called `QueryResResolve` which is both JSON marshallable and has a `.String()` method.
-  - For the output of Whois, the normal Whois struct is already JSON marshalable, but we need to add a `.String()` method on it.
-  - Same for the output of a names query, a `[]string` is already natively marshalable, but we want to add a `.String()` method on it.
+ - ここであなたの `Keeper`のゲッターとセッターが多用されています。このモジュールを使用する他のアプリケーションを構築するときには、戻って必要な状態の部分にアクセスするためにさらにゲッター/セッターを定義する必要があるかもしれません。
+ - 慣例により、各出力型はJSON整列化可能かつ文字列化可能（Golangの `fmt.Stringer`インターフェースを実装する）の両方であるべきです。返されるバイトは、出力結果のJSONエンコーディングです。
+   - それで、 `resolve`の出力タイプのために、解決文字列をJSON整列化可能で` .String（） `メソッドを持つ` QueryResResolve`と呼ばれる構造体にラップします。
+   -  Whoisの出力では、通常のWhois構造体はすでにJSONマーシャリング可能ですが、それに `.String（）`メソッドを追加する必要があります。
+   -  namesクエリの出力と同じですが、 `[] string`は既にネイティブにマーシャリング可能ですが、それに` .String（） `メソッドを追加したいと思います。
 
-### Now that you have ways to mutate and view your module state it's time to put the finishing touches on it! Register your types in the [Amino encoding format next](./codec.md)!
+###モジュールの状態を変化させて表示する方法がありましたので、最後に仕上げましょう。あなたの型を[Amino encoding format next](./codec.md)で登録する!

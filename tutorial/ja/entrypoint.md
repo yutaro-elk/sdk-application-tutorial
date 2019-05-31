@@ -1,20 +1,20 @@
-# Entrypoints
+＃エントリポイント
 
-In golang the convention is to place files that compile to a binary in the `./cmd` folder of a project. For your application there are 2 binaries that you want to create:
+golangでは、規約はプロジェクトの `。/ cmd`フォルダにバイナリにコンパイルされるファイルを置くことです。あなたのアプリケーションにはあなたが作りたい2つのバイナリがあります。
 
-- `nsd`: This binary is similar to `bitcoind` or other cryptocurrency daemons in that it maintains p2p connections, propagates transactions, handles local storage and provides an RPC interface to interact with the network. In this case, Tendermint is used for networking and transaction ordering.
-- `nscli`: This binary provides commands that allow users to interact with your application.
+ -  `nsd`：このバイナリは、p2p接続を維持し、トランザクションを伝播し、ローカルストレージを処理し、ネットワークと対話するためのRPCインタフェースを提供するという点で、` bitcoind`や他の暗号通貨デーモンと似ています。この場合、Tendermintはネットワーキングとトランザクションの順序付けに使用されます。
+ -  `nscli`：このバイナリはユーザがあなたのアプリケーションと対話することを可能にするコマンドを提供します。
 
-To get started create two files in your project directory that will instantiate these binaries:
+はじめに、これらのバイナリをインスタンス化する2つのファイルをプロジェクトディレクトリに作成します。
 
-- `./cmd/nsd/main.go`
-- `./cmd/nscli/main.go`
+ -  `。/ cmd / nsd / main.go`
+ -  `。/ cmd / nscli / main.go`
 
 ## `nsd`
 
-Start by adding the following code to `nsd/main.go`:
+以下のコードを `nsd / main.go`に追加することから始めます。
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}`）。
 
 ```go
 package main
@@ -248,17 +248,17 @@ func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 }
 ```
 
-Notes on the above code:
+上記のコードについての注意：
 
-- Most of the code above combines the CLI commands from Tendermint, Cosmos-SDK and your Nameservice module.
-- `InitCmd` allows the app to generate genesis state from the configuration. Dig into the function calls there to learn more about the chain bootstrapping process
-- `AddGenesisAccountCmd` is a convenience for adding accounts to the genesis file, allowing for wallets with coins at chain start
+ - 上記のコードの大部分は、Tendermint、Cosmos-SDK、そしてあなたのNameserviceモジュールからのCLIコマンドを組み合わせたものです。
+ -  `InitCmd`は、設定から生成状態を生成することをアプリに許可します。チェーンブートストラップ処理の詳細については、関数呼び出しを調べてください。
+ -  `AddGenesisAccountCmd`は、ジェネシスファイルにアカウントを追加するのに便利です。チェーンスタート時にコインで財布を入れることができます。
 
 ## `nscli`
 
-Finish up by building the `nscli` command:
+`nscli`コマンドをビルドして終了してください。
 
-> _*NOTE*_: Your application needs to import the code you just wrote. Here the import path is set to this repository (`github.com/cosmos/sdk-application-tutorial`). If you are following along in your own repo you will need to change the import path to reflect that (`github.com/{ .Username }/{ .Project.Repo }`).
+> _ * NOTE * _：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています（ `github.com / cosmos / sdk-application-tutorial`）。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}`）。
 
 ```go
 package main
@@ -419,11 +419,11 @@ func initConfig(cmd *cobra.Command) error {
 }
 ```
 
-Note:
+注意：
 
-- The code combines the CLI commands from Tendermint, Cosmos-SDK and your Nameservice module.
-- The [`cobra` CLI documentation](http://github.com/spf13/cobra) will help with understanding the above code.
-- You can see the `ModuleClient` defined earlier in action here.
-- Note how the routes are included in the `registerRoutes` function
+ - コードはTendermint、Cosmos-SDKおよびあなたのNameserviceモジュールからのCLIコマンドを結合します。
+ -  [`cobra` CLI documentation]（http://github.com/spf13/cobra）は上記のコードを理解するのに役立ちます。
+ - ここで先に定義した `ModuleClient`を見ることができます。
+ - ルートが `registerRoutes`関数にどのように含まれているかに注意してください
 
-### Now that you have your binaries defined its time to deal with [dependency management and build your app](dep.md)!
+###これであなたのバイナリは[依存関係管理とあなたのアプリのビルド](dep.md)を扱う時間を定義しました！

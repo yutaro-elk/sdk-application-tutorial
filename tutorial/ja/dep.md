@@ -1,10 +1,10 @@
-# Building your app
+＃アプリを構築する
 
 ## `Makefile`
 
-Help users build your application by writing a `./Makefile` in the root directory that includes common commands:
+一般的なコマンドが含まれているルートディレクトリに `。/ Makefile`を書くことでユーザがあなたのアプリケーションを構築するのを助けてください：
 
-> _*NOTE*_: The below Makefile contains some of same commands as the Cosmos SDK and Tendermint Makefiles.
+> _ * NOTE * _：下記のMakefileにはCosmos SDKやTendermint Makefileと同じコマンドがいくつか含まれています。
 
 ```makefile
 all: install
@@ -18,11 +18,11 @@ go.sum: go.mod
     GO111MODULE=on go mod verify
 ```
 
-### How about including Ledger Nano S support?
+###元帳ナノSサポートを含めることはどうですか？
 
-This requires a few small changes:
+これにはいくつかの小さな変更が必要です。
 
-- Create a file `Makefile.ledger` with the following content: 
+ - 以下の内容のファイル `Makefile.ledger`を作成します。
 
 ```makefile
 LEDGER_ENABLED ?= true
@@ -52,7 +52,7 @@ ifeq ($(LEDGER_ENABLED),true)
 endif
 ```
 
-- Add `include Makefile.ledger` at the beginning of the Makefile:
+ -  Makefileの先頭に `include Makefile.ledger`を追加してください。
 
 ```makefile
 include Makefile.ledger
@@ -71,9 +71,9 @@ go.sum: go.mod
 
 ## `go.mod`
 
-Golang has a few dependency management tools. In this tutorial you will be using [`Go Modules`](https://github.com/golang/go/wiki/Modules). `Go Modules` uses a `go.mod` file in the root of the repository to define what dependencies the application needs. Cosmos SDK apps currently depend on specific versions of some libraries. The below manifest contains all the necessary versions. To get started replace the contents of the `./go.mod` file with the `constraints` and `overrides` below:
+Golangにはいくつかの依存関係管理ツールがあります。このチュートリアルでは、[`Go Modules`]（https://github.com/golang/go/wiki/Modules）を使用します。 `Go Modules`はリポジトリのルートにある` go.mod`ファイルを使ってアプリケーションが必要とする依存関係を定義します。 Cosmos SDKアプリは現在、一部のライブラリの特定のバージョンに依存しています。以下のマニフェストには必要なすべてのバージョンが含まれています。はじめに、 `。/ go.mod`ファイルの内容を以下の` constraint`と `overrides`に置き換えてください：
 
-> _*NOTE*_: If you are following along in your own repo you will need to change the module path to reflect that (`github.com/{ .Username }/{ .Project.Repo }`).
+> _ * NOTE * _：自分のリポジトリをフォローしている場合は、それを反映するようにモジュールパスを変更する必要があります（ `github.com/ {.Username} / {.Project.Repo}）。
 
 ```
 module sdk-application-tutorial
@@ -144,7 +144,7 @@ require (
 replace golang.org/x/crypto => github.com/tendermint/crypto v0.0.0-20180820045704-3764759f34a5
 ```
 
-## Building the app
+##アプリをビルドする
 
 ```bash
 # Install the app into your $GOBIN
@@ -155,4 +155,4 @@ nsd help
 nscli help
 ```
 
-### Congratulations, you have finished your nameservice application! Try [running and interacting with it](./build-run.md)!
+###おめでとう、あなたはあなたのネームサービスアプリケーションを完成しました！ [実行して対話する](./build-run.md)を試してください。

@@ -1,10 +1,10 @@
-# The Keeper
+＃ キーパー
 
-The main core of a Cosmos SDK module is a piece called the `Keeper`. It is what handles interaction with the store, has references to other keepers for cross-module interactions, and contains most of the core functionality of a module.
+Cosmos SDKモジュールの中心は `Keeper`と呼ばれるものです。それは、ストアとのやり取りを処理し、モジュール間のやり取りのための他のキーパーへの参照を持ち、そしてモジュールのコア機能の大部分を含みます。
 
 ## Keeper Struct
 
-To start your SDK module, define your `nameservice.Keeper` in  a new `./x/nameservice/keeper.go` file:
+SDKモジュールを起動するには、新しい `。/ x / nameservice / keeper.go`ファイルに` nameservice.Keeper`を定義してください。
 
 ```go
 package nameservice
@@ -26,20 +26,20 @@ type Keeper struct {
 }
 ```
 
-A couple of notes about the above code:
+上記のコードについての注意点
 
-* 3 different `cosmos-sdk` packages are imported:
-	- [`codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec) - the `codec` provides tools to work with the Cosmos encoding format, [Amino](https://github.com/tendermint/go-amino).
-	- [`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank) - the `bank` module controls accounts and coin transfers.
-	- [`types`](https://godoc.org/github.com/cosmos/cosmos-sdk/types) - `types` contains commonly used types throughout the SDK.
-* The `Keeper` struct. In this keeper there are a couple of key pieces:
-	- [`bank.Keeper`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#Keeper) - This is a reference to the `Keeper` from the `bank` module. Including it allows code in this module to call functions from the `bank` module. The SDK uses an [object capabilities](https://en.wikipedia.org/wiki/Object-capability_model) approach to accessing sections of the application state. This is to allow developers to employ a least authority approach, limiting the capabilities of a faulty or malicious module from affecting parts of state it doesn't need access to.
-	- [`*codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec) - This is a pointer to the codec that is used by Amino to encode and decode binary structs.
-	- [`sdk.StoreKey`](https://godoc.org/github.com/cosmos/cosmos-sdk/types#StoreKey) -  This is a store key which gates access to a `sdk.KVStore` which persists the state of your application: the Whois struct that the name points to (i.e. `map[name]Whois`).
+* 3種類の `cosmos-sdk`パッケージがインポートされています：
+ -  [`codec`]（https://godoc.org/github.com/cosmos/cosmos-sdk/codec） - ` codec`はCosmosエンコーディングフォーマットで動作するためのツールを提供します。[Amino]（https：//） github.com/tendermint/go-amino）
+ -  [`bank`]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank） - ` bank`モジュールは口座と硬貨振替を制御します。
+ -  [`types`]（https://godoc.org/github.com/cosmos/cosmos-sdk/types） - ` types`にはSDKでよく使われる型が含まれています。
+* `Keeper`構造体このキーパーには、いくつかの重要な部分があります。
+ -  [`bank.Keeper`]（https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#Keeper） - これは` bank`モジュールからの `Keeper`への参照です。それを含めることで、このモジュールのコードが `bank`モジュールから関数を呼び出せるようになります。 SDKは、[オブジェクト機能]（https://en.wikipedia.org/wiki/Object-capability_model）アプローチを使用してアプリケーション状態のセクションにアクセスします。これは、開発者が最小権限のアプローチを採用して、不良または悪意のあるモジュールの機能が、アクセスする必要がない状態の部分に影響を与えることを制限することを可能にするためです。
+ -  [`* codec.Codec`]（https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec） - これはAminoがバイナリのエンコードとデコードに使用するコーデックへのポインタです。構造体
+ -  [`sdk.StoreKey`]（https://godoc.org/github.com/cosmos/cosmos-sdk/types#StoreKey） - これは持続的な` sdk.KVStore`へのアクセスをゲートするストアキーです。あなたのアプリケーションの状態：名前が指し示すWhois構造体（すなわち `map [name] Whois`）。
 
-## Getters and Setters
+##ゲッターとセッター
 
-Now it is time to add methods to interact with the stores through the `Keeper`. First, add a function to set the Whois a given name resolves to:
+今度は `Keeper`を通して店と対話するためのメソッドを追加する時が来ました。まず、与えられた名前が解決するWhoisを設定する関数を追加します。
 
 ```go
 // Sets the entire Whois metadata struct for a name
@@ -52,15 +52,15 @@ func (k Keeper) SetWhois(ctx sdk.Context, name string, whois Whois) {
 }
 ```
 
-In this method, first get the store object for the `map[name]Whois` using the the `storeKey` from the `Keeper`.
+このメソッドでは、まず `Keeper`の` storeKey`を使って `map [name] Whois`のstoreオブジェクトを取得します。
 
-> _*NOTE*_: This function uses the [`sdk.Context`](https://godoc.org/github.com/cosmos/cosmos-sdk/types#Context). This object holds functions to access a number of important pieces of the state like `blockHeight` and `chainID`.
+> _ * NOTE * _：この関数は[`sdk.Context`]（https://godoc.org/github.com/cosmos/cosmos-sdk/types#Context）を使います。このオブジェクトは `blockHeight`や` chainID`のような状態のいくつかの重要な部分にアクセスするための関数を保持しています。
 
-Next, you insert the `<name, whois>` pair into the store using its `.Set([]byte, []byte)` method.  As the store only takes `[]byte`, we use the Cosmos SDK encoding library called Amino to marshal the `Whois` struct to `[]byte` to be inserted into the store.
+次に、 `.Set（[] byte、[] byte）`メソッドを使って `<name、whois>`ペアをストアに挿入します。ストアは `[] byte`のみを取るので、ストアに挿入される` Whois`構造体を `[] byte`に整列化するためにAminoと呼ばれるCosmos SDKエンコーディングライブラリを使います。
 
-If the owner field of a Whois is empty, we do not write anything to the store, as all names that exist must have an owner.
+Whoisの所有者フィールドが空の場合、存在するすべての名前に所有者が必要なので、ストアには何も書き込みません。
 
-Next, add a method to resolve the names (i.e. look up the `Whois` for the `name`):
+次に、名前を解決するためのメソッドを追加します（すなわち、 `name`の` Whois`を検索します）。
 
 ```go
 // Gets the entire Whois metadata struct for a name
@@ -76,12 +76,11 @@ func (k Keeper) GetWhois(ctx sdk.Context, name string) Whois {
 }
 ```
 
-Here, like in the `SetName` method, first access the store using the `StoreKey`.  Next, instead of using the `Set` method on the store key, use the `.Get([]byte) []byte` method. As the parameter into the function, pass the key, which is the `name` string casted to `[]byte`, and get back the result in the form of `[]byte`. We once again use Amino, but this time to unmarshal the byteslice back into a `Whois` struct which we then return.
+ここでは、 `SetName`メソッドのように、まず` StoreKey`を使ってストアにアクセスします。次に、storeキーに対して `Set`メソッドを使う代わりに、` .Get（[] byte）[] byte`メソッドを使います。関数へのパラメータとして、keyを渡します。それは `[] byte`にキャストされた` name`文字列で、結果を `[] byte`の形で返します。ここでもまたAminoを使用しますが、今回はバイトスライスを「Whois」構造体にアンマーシャルして返します。
 
-If a name currently does not exist in the store, it returns a new Whois, which has the minimumPrice initialized in it.
+現在ストアに名前が存在しない場合は、minimumPriceが初期化されている新しいWhoisを返します。
 
-Now, we add functions for getting specific parameters from the store based on the name.  However, instead of rewriting the store getters and setters, we reuse the `GetWhois` and `SetWhois` functions.  For example, to set a field, first we grab the whole Whois data, update our specific field, and put the new version back into the store.
-
+今回は、名前に基づいてストアから特定のパラメータを取得するための関数を追加しました。しかし、ストアのゲッターとセッターを書き換える代わりに、 `GetWhois`と` SetWhois`関数を再利用します。たとえば、フィールドを設定するには、まずWhoisデータ全体を取得し、特定のフィールドを更新してから、新しいバージョンをストアに戻します。
 ```go
 // ResolveName - returns the string that the name resolves to
 func (k Keeper) ResolveName(ctx sdk.Context, name string) string {
@@ -124,9 +123,8 @@ func (k Keeper) SetPrice(ctx sdk.Context, name string, price sdk.Coins) {
 	k.SetWhois(ctx, name, whois)
 }
 ```
-
-The SDK also includes a feature called an `sdk.Iterator`, which returns an iterator over all the `<Key, Value>` pairs in a specific spot in a store.
-We will add a function to get an iterator over all the names that exist in the store.
+SDKには `sdk.Iterator`と呼ばれる機能も含まれています。これは、ストア内の特定の場所にあるすべての` <Key、Value> `ペアに対して反復子を返します。
+ストア内に存在するすべての名前の反復子を取得するための関数を追加します。
 
 ```go
 // Get an iterator over all names in which the keys are the names and the values are the whois
@@ -136,7 +134,7 @@ func (k Keeper) GetNamesIterator(ctx sdk.Context) sdk.Iterator {
 }
 ```
 
-The last piece of code needed in the `./x/nameservice/keeper.go` file is a constructor function for `Keeper`:
+`。/ x / nameservice / keeper.go`ファイルに必要な最後のコードは` Keeper`のコンストラクタ関数です。
 
 ```go
 // NewKeeper creates new instances of the nameservice Keeper
@@ -149,4 +147,4 @@ func NewKeeper(coinKeeper bank.Keeper, storeKey sdk.StoreKey, cdc *codec.Codec) 
 }
 ```
 
-### Next its time to move onto describing how users interact with your new store using [`Msgs` and `Handlers`](msgs-handlers.md)
+### 次に、[`Msgs`と` Handlers`](msgs-handlers.md)を使って、ユーザーがあなたの新しいストアとどのようにやり取りするのかを説明します。
