@@ -1,8 +1,8 @@
 # アプリケーションの構築と実行
 
-##`nameservice`アプリケーションを構築する
+## `nameservice`アプリケーションを構築する
 
-機能を確認するためにこのリポジトリで`nameservice`アプリケーションを構築したい場合は** Go 1.12.1 + **が必要です。
+機能を確認するためにこのリポジトリで`nameservice`アプリケーションを構築したい場合は**Go 1.12.1 +**が必要です。
 
 これまでに`go mod`を使ったことがないのであれば、environmentにいくつかのパラメータを追加する必要があります。
 
@@ -26,7 +26,7 @@ nsd help
 nscli help
 ```
 
-##ライブネットワークを実行してコマンドを使用する
+## ライブネットワークを実行してコマンドを使用する
 
 あなたのアプリケーションのための設定と`genesis.json`ファイルとトランザクションのためのアカウントを初期化するために、実行することから始めてください：
 
@@ -37,7 +37,7 @@ nscli help
 > _*NOTE*_：レジャー用のCosmosアプリを持っていてそれを使いたい場合、`nscli keys add jack`でキーを作成するときに最後に`--ledger`を追加するだけです。必要なものはこれだけです。サインインすると、`jack`は元帳キーとして認識され、デバイスが必要になります。
 
 ```bash
-# 設定ファイルと起源ファイルを初期化する
+# 設定ファイルとgenesisファイルを初期化する
 nsd init --chain-id namechain
 
 # ここに`Address`の出力をコピーして後で使うためにそれを保存する
@@ -47,7 +47,7 @@ nscli keys add jack
 # ここに`Address`の出力をコピーして後で使うためにそれを保存する
 nscli keys add alice
 
-# コインを使って両方のアカウントをジェネシスファイルに追加します。
+# コインを使って両方のアカウントをgenesisファイルに追加します。
 nsd add-genesis-account $(nscli keys show jack -a) 1000nametoken,1000jackcoin
 nsd add-genesis-account $(nscli keys show alice -a) 1000nametoken,1000alicecoin
 
@@ -60,7 +60,7 @@ nscli config trust-node true
 
 これで`nsd start`を呼び出して`nsd`を起動することができます。生成中のブロックを表すログのストリーミングが開始されます。これには数秒かかります。
 
-作成したネットワークに対してコマンドを実行するには、別の端末を開きます。
+作成したネットワークに対してコマンドを実行するには、別のターミナルを開きます。
 
 ```bash
 # まず口座をチェックして資金があることを確認します
@@ -75,7 +75,7 @@ nscli tx nameservice set-name jack.id 8.8.8.8 --from jack
 
 # 登録した名前に対して解決クエリを試してください。
 nscli query nameservice resolve jack.id
-# ＞ ８。８。８。８
+# > 8.8.8.8
 
 # 登録したばかりの名前に対してwhoisクエリを試してください。
 nscli query nameservice whois jack.id

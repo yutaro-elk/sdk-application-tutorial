@@ -18,7 +18,7 @@ go.sum: go.mod
     GO111MODULE=on go mod verify
 ```
 
-###元帳ナノSサポートを含めることはどうですか？
+### 「Ledger Nano S」をサポートするには？
 
 これにはいくつかの小さな変更が必要です。
 
@@ -71,9 +71,11 @@ go.sum: go.mod
 
 ## `go.mod`
 
-Golangにはいくつかの依存関係管理ツールがあります。このチュートリアルでは、[`Go Modules`](https://github.com/golang/go/wiki/Modules)を使用します。`Go Modules`はリポジトリのルートにある`go.mod`ファイルを使ってアプリケーションが必要とする依存関係を定義します。 Cosmos SDKアプリは現在、一部のライブラリの特定のバージョンに依存しています。以下のマニフェストには必要なすべてのバージョンが含まれています。はじめに、`./go.mod`ファイルの内容を以下の`constraint`と`overrides`に置き換えてください：
+Golangにはいくつかの依存関係管理ツールがありますが、このチュートリアルでは[`Go Modules`](https://github.com/golang/go/wiki/Modules)を使用します。
 
-> _*NOTE*_：自分のリポジトリをフォローしている場合は、それを反映するようにモジュールパスを変更する必要があります(`github.com/ {.Username}/{.Project.Repo})。
+`Go Modules`はリポジトリのルートにある`go.mod`ファイルを使ってアプリケーションが必要とする依存関係を定義します。 Cosmos SDKアプリは現在、一部のライブラリの特定のバージョンに依存しています。以下のマニフェストには必要なすべてのバージョンが含まれています。はじめに、`./go.mod`ファイルの内容を以下の`constraint`と`overrides`に置き換えてください：
+
+> _*NOTE*_：自分のリポジトリをフォローしている場合は、それを反映するようにモジュールパスを変更する必要があります(`github.com/{.Username}/{.Project.Repo})。
 
 ```
 module sdk-application-tutorial
@@ -89,7 +91,7 @@ require (
 	github.com/cosmos/cosmos-sdk v0.33.0
 	github.com/cosmos/go-bip39 v0.0.0-20180618194314-52158e4697b8
 	github.com/cosmos/ledger-cosmos-go v0.9.8
-	github.com/cosmos/sdk-application-tutorial v0.0.0-20190401171757-ef9c78014e84
+	github.com/cosmos/sdk-application-tutorial v0.0.0-20190401171757-ef9c78014e84 
 	github.com/davecgh/go-spew v1.1.1
 	github.com/ethereum/go-ethereum v1.8.23
 	github.com/fsnotify/fsnotify v1.4.7
@@ -155,4 +157,4 @@ nsd help
 nscli help
 ```
 
-### おめでとう、あなたはあなたのネームサービスアプリケーションを完成しました！ [実行して対話する](./build-run.md)を試してください。
+### おめでとう! あなたはあなたのネームサービスアプリケーションを完成しました！ [実行して対話](./build-run.md)を試してみましょう。

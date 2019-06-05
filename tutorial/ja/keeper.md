@@ -16,7 +16,7 @@ import (
 	sdk "github.com/cosmos/cosmos-sdk/types"
 )
 
-// Keeper データストレージへのリンクを維持し、ステートマシンのさまざまな部分のゲッター/セッターメソッドを公開します。
+// Keeperデータストレージへのリンクを維持し、ステートマシンのさまざまな部分のゲッター/セッターメソッドを公開します。
 type Keeper struct {
 	coinKeeper bank.Keeper
 

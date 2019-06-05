@@ -2,15 +2,15 @@
 
 このチュートリアルでは、機能的な[Cosmos SDK](https://github.com/cosmos/cosmos-sdk/)アプリケーションを作成し、その過程でSDKの基本概念と構造を学びます。この例では、Cosmos SDKを利用して**迅速かつ簡単に独自のブロックチェーンを構築する**方法を紹介します。
 
-このチュートリアルの終わりまでに、あなたは機能的な`nameservice`アプリケーション、他の文字列への文字列のマッピング(`map [string] string`)を持つことになります。これは[Namecoin](https://namecoin.org/)、[ENS](https://ens.domains/)、または[Handshake](https://handshake.org/)の 。伝統的なDNSシステム(`map [domain] zonefile`)。ユーザーは未使用の名前を購入したり、自分の名前を売買することができます。
+このチュートリアルの終わりまでに、あなたは機能的な`nameservice`アプリケーション、他の文字列への文字列のマッピング(`map[string]string`)を持つことになります。これは[Namecoin](https://namecoin.org/)、[ENS](https://ens.domains/)、または[Handshake](https://handshake.org/)の 。伝統的なDNSシステム(`map[domain]zonefile`)。ユーザーは未使用の名前を購入したり、自分の名前を売買することができます。
 
 このチュートリアルプロジェクトの最終的なソースコードはすべてこのディレクトリにあります(そしてコンパイルされます)。ただし、手動で作業を進め、自分でプロジェクトを構築してみることをお勧めします。
 
 ## 必要条件
 
  -  [`golang`> 1.12.1](https://golang.org/doc/install)インストール済み
- - 動いている[`$ GOPATH`](https://github.com/golang/go/wiki/SettingGOPATH)
- - あなた自身のブロックチェーンを作りたい！
+ - 動いている[`$GOPATH`](https://github.com/golang/go/wiki/SettingGOPATH)
+ - あなた自身のブロックチェーンを作りたい！という気持ち。
 
 ## チュートリアル
 
@@ -53,7 +53,7 @@ git init
 
 ### チュートリアルパート
 
-1. アプリケーションを[デザイン](./app-design.md)します。
+1. アプリケーションの[設計](./app-design.md)をします。
 2. [`./app.go`](..app_init.md)でアプリケーションの実装を始めます。
 3. いくつかの基本的な[`型`](types.md)を定義してモジュールの構築を始めます。
 4. [`Keeper`](./keeper.md)を使ってモジュールのメインコアを作成します。

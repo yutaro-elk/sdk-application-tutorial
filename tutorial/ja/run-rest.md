@@ -7,7 +7,7 @@ $ nscli keys show jack --address
 $ nscli keys show alice --address
 ```
 
-今度は別の端末ウィンドウで`rest-server`を起動します。
+今度は別のターミナルウィンドウで`rest-server`を起動します。
 
 ```bash
 $ nscli rest-server --chain-id namechain --trust-node
@@ -20,7 +20,11 @@ $ nscli rest-server --chain-id namechain --trust-node
 ```bash
 # 以下のリクエストを作成するためのjackのシーケンス番号とアカウント番号を取得します
 $ curl -s http://localhost:1317/auth/accounts/$(nscli keys show jack -a)
-# > {"type":"auth/Account","value":{"address":"cosmos127qa40nmq56hu27ae263zvfk3ey0tkapwk0gq6","coins":[{"denom":"jackCoin","amount":"1000"},{"denom":"nametoken","amount":"1010"}],"public_key":{"type":"tendermint/PubKeySecp256k1","value":"A9YxyEbSWzLr+IdK/PuMUYmYToKYQ3P/pM8SI1Bxx3wu"},"account_number":"0","sequence":"1"}}
+# > 
+{
+  "type":"auth/Account",
+  "value":{
+    "address":"cosmos127qa40nmq56hu27ae263zvfk3ey0tkapwk0gq6","coins":[{"denom":"jackCoin","amount":"1000"},{"denom":"nametoken","amount":"1010"}],"public_key":{"type":"tendermint/PubKeySecp256k1","value":"A9YxyEbSWzLr+IdK/PuMUYmYToKYQ3P/pM8SI1Bxx3wu"},"account_number":"0","sequence":"1"}}
 
 # 以下のリクエストを作成するために、aliceのシーケンス番号とアカウント番号を取得します。
 $ curl -s http://localhost:1317/auth/accounts/$(nscli keys show alice -a)
@@ -51,7 +55,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 
 ### リクエストスキーマ：
 
-#### `POST/nameservice/names`BuyNameリクエストボディ：
+#### `POST /nameservice/names` BuyNameリクエストボディ：
 ```json
 {
   "base_req": {
@@ -69,7 +73,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 }
 ```
 
-#### `PUT /nameservice/names`SetNameリクエストボディ：
+#### `PUT /nameservice/names` SetNameリクエストボディ：
 ```json
 {
   "base_req": {
@@ -87,4 +91,4 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 }
 ```
 
-### [チュートリアルの始めに戻る](./README.md)
+### お疲れ様でした！これでこのチュートリアルは全て終了です！[チュートリアルの始めに戻る](./README.md)
