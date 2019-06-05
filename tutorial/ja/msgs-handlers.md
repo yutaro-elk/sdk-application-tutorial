@@ -7,34 +7,34 @@
 `Msgs`は状態遷移を引き起こします。 `Msgs`はクライアントがネットワークに送信する[` Txs`](https://github.com/cosmos/cosmos-sdk/blob/develop/types/tx_msg.go#L34-L38)にラップされています。 Cosmos SDKは、 `Txs`から` Msgs`をラップしたりアンラップしたりします。つまり、アプリ開発者としては、Msgsを定義するだけで済みます。 `Msgs`は次のインターフェースを満たさなければなりません(これらはすべて次のセクションで実装します)。
 
 ```go
-// Transactions messages must fulfill the Msg
+// トランザクションメッセージはMsgを満たす必要があります
 type Msg interface {
-	// Return the message type.
-	// Must be alphanumeric or empty.
+	// メッセージタイプを返します。
+	// 英数字または空でなければなりません。
 	Type() string
 
-	// Returns a human-readable string for the message, intended for utilization
-	// within tags
+	// 利用を目的とした、メッセージの可読文字列を返します。
+	// タグ内
 	Route() string
 
-	// ValidateBasic does a simple validation check that
-	// doesn't require access to any other information.
+	// ValidateBasicは単純な検証チェックを行います。
+  // 他の情報にアクセスする必要はありません。
 	ValidateBasic() Error
 
-	// Get the canonical byte representation of the Msg.
+	//メッセージの正規のバイト表現を取得する
 	GetSignBytes() []byte
 
-	// Signers returns the addrs of signers that must sign.
-	// CONTRACT: All signatures must be present to be valid.
-	// CONTRACT: Returns addrs in some deterministic order.
+	//署名者は、署名する必要がある署名者のアドレスを返します。
+	//契約：すべての署名は有効であるために存在しなければなりません。
+	// CONTRACT：決定論的な順序でアドレスを返します。
 	GetSigners() []AccAddress
 }
 ```
 
 ## `ハンドラ`
 
-`Handlers`は与えられた` Msg`が受信された時にとるべきアクション(どのストアを更新する必要があるか、どのように、そしてどんな条件下で)を定義します。
+`Handlers`は与えられた`Msg`が受信された時にとるべきアクション(どのストアを更新する必要があるか、どのように、そしてどんな条件下で)を定義します。
 
-このモジュールには、ユーザがアプリケーションの状態とやり取りするために送信できる2種類の `Msgs`があります：[` SetName`](set-name.md)と[`BuyName`](./ buy-name.md)です。それらはそれぞれ関連する `Handler`を持ちます。
+このモジュールには、ユーザがアプリケーションの状態とやり取りするために送信できる2種類の `Msgs`があります：[` SetName`](set-name.md)と[`BuyName`](./buy-name.md)です。それらはそれぞれ関連する `Handler`を持ちます。
 
-###これで `Msgs`と` Handlers`の理解が深まったので、最初のメッセージを作り始めることができます：[`SetName`](set-name.md)。
+### これで`Msgs`と`Handlers`の理解が深まったので、最初のメッセージを作り始めることができます：[`SetName`](set-name.md)。

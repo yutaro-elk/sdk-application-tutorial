@@ -49,7 +49,7 @@ import (
 	tmtypes "github.com/tendermint/tendermint/types"
 )
 
-// DefaultNodeHome sets the folder where the application data and configuration will be stored
+// DefaultNodeHomeは、アプリケーションデータと設定が保存されるフォルダを設定します
 var DefaultNodeHome = os.ExpandEnv("$HOME/.nsd")
 
 const (
@@ -72,11 +72,11 @@ func main() {
 	rootCmd.AddCommand(AddGenesisAccountCmd(ctx, cdc))
 	server.AddCommands(ctx, cdc, rootCmd, newApp, appExporter())
 
-	// prepare and add flags
+	//フラグを準備して追加する
 	executor := cli.PrepareBaseCmd(rootCmd, "NS", DefaultNodeHome)
 	err := executor.Execute()
 	if err != nil {
-		// handle with #870
+		//＃870で処理する
 		panic(err)
 	}
 }
@@ -93,7 +93,7 @@ func appExporter() server.AppExporter {
 	}
 }
 
-// InitCmd initializes all files for tendermint and application
+// InitCmdはすべてのファイルをtendermintとapplication用に初期化します
 func InitCmd(ctx *server.Context, cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "init",
@@ -153,7 +153,7 @@ func InitCmd(ctx *server.Context, cdc *codec.Codec) *cobra.Command {
 	return cmd
 }
 
-// AddGenesisAccountCmd allows users to add accounts to the genesis file
+// AddGenesisAccountCmdを使用すると、ユーザーはGeneisファイルにアカウントを追加できます
 func AddGenesisAccountCmd(ctx *server.Context, cdc *codec.Codec) *cobra.Command {
 	cmd := &cobra.Command{
 		Use:   "add-genesis-account [address] [coins[,coins]]",
@@ -214,7 +214,7 @@ $ nsd add-genesis-account cosmos1tse7r2fadvlrrgau3pa0ss7cqh55wrv6y9alwh 1000STAK
 	return cmd
 }
 
-// SimpleAppGenTx returns a simple GenTx command that makes the node a valdiator from the start
+// SimpleAppGenTxは、ノードを最初からvaldiatorにする単純なGenTxコマンドを返します
 func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 	appGenTx, cliPrint json.RawMessage, validator tmtypes.GenesisValidator, err error) {
 
@@ -258,7 +258,7 @@ func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 
 `nscli`コマンドをビルドして終了してください。
 
-> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}`)。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/{.Username}/{.Project.Repo}`)。
 
 ```go
 package main
@@ -299,7 +299,7 @@ func main() {
 
 	cdc := app.MakeCodec()
 
-	// Read in the configuration file for the sdk
+	// SDKの設定ファイルを読み込む
 	config := sdk.GetConfig()
 	config.SetBech32PrefixForAccount(sdk.Bech32PrefixAccAddr, sdk.Bech32PrefixAccPub)
 	config.SetBech32PrefixForValidator(sdk.Bech32PrefixValAddr, sdk.Bech32PrefixValPub)
@@ -315,13 +315,13 @@ func main() {
 		Short: "nameservice Client",
 	}
 
-	// Add --chain-id to persistent flags and mark it required
+	//永続フラグに--chain-idを追加して必須マークを付けます
 	rootCmd.PersistentFlags().String(client.FlagChainID, "", "Chain ID of tendermint node")
 	rootCmd.PersistentPreRunE = func(_ *cobra.Command, _ []string) error {
 		return initConfig(rootCmd)
 	}
 
-	// Construct Root Command
+	//ルート作成コマンド
 	rootCmd.AddCommand(
 		rpc.StatusCommand(),
 		client.ConfigCmd(defaultCLIHome),
@@ -426,4 +426,4 @@ func initConfig(cmd *cobra.Command) error {
  - ここで先に定義した `ModuleClient`を見ることができます。
  - ルートが `registerRoutes`関数にどのように含まれているかに注意してください
 
-###これであなたのバイナリは[依存関係管理とあなたのアプリのビルド](dep.md)を扱う時間を定義しました！
+### これであなたのバイナリは[依存関係管理とあなたのアプリのビルド](dep.md)を扱う時間を定義しました！

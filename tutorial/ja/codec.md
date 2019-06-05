@@ -9,11 +9,11 @@ import (
 	"github.com/cosmos/cosmos-sdk/codec"
 )
 
-// RegisterCodec registers concrete types on wire codec
+// RegisterCodecはワイヤコーデックに具象型を登録する
 func RegisterCodec(cdc *codec.Codec) {
 	cdc.RegisterConcrete(MsgSetName{}, "nameservice/SetName", nil)
 	cdc.RegisterConcrete(MsgBuyName{}, "nameservice/BuyName", nil)
 }
 ```
 
-###次に、あなたは自分のモジュールで[CLI interaction](./cli.md)を定義する必要があります。
+### 次に、あなたは自分のモジュールで[CLI interaction](./cli.md)を定義する必要があります。

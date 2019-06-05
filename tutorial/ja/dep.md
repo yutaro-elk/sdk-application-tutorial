@@ -144,15 +144,15 @@ require (
 replace golang.org/x/crypto => github.com/tendermint/crypto v0.0.0-20180820045704-3764759f34a5
 ```
 
-##アプリをビルドする
+## アプリをビルドする
 
 ```bash
-# Install the app into your $GOBIN
+# あなたの$ GOBINにアプリをインストールする
 make install
 
-# Now you should be able to run the following commands:
+# これで、以下のコマンドを実行できるはずです。
 nsd help
 nscli help
 ```
 
-###おめでとう、あなたはあなたのネームサービスアプリケーションを完成しました！ [実行して対話する](./build-run.md)を試してください。
+### おめでとう、あなたはあなたのネームサービスアプリケーションを完成しました！ [実行して対話する](./build-run.md)を試してください。

@@ -14,7 +14,7 @@
  - Price - 名前を買うために支払う必要がある価格
 
 
-SDKモジュールを起動するには、 `./x/nameservice/types.go`に` nameservice.Whois`構造体を定義してください。
+SDKモジュールを起動するには、`./x/nameservice/types.go`に`nameservice.Whois`構造体を定義してください。
 
 ```go
 package nameservice
@@ -45,4 +45,4 @@ func NewWhois() Whois {
 }
 ```
 
-###今度は[Keeper for the module](./keeper.md)を書くことに移ります。
+### 今度は[Keeper for the module](./keeper.md)を書くことに移ります。

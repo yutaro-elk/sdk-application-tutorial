@@ -45,7 +45,7 @@ func GetCmdResolveName(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-// GetCmdWhois queries information about a domain
+// GetCmdWhoisはドメインに関する情報を問い合わせます
 func GetCmdWhois(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "whois [name]",
@@ -68,12 +68,12 @@ func GetCmdWhois(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-// GetCmdNames queries a list of all names
+// GetCmdNamesはすべての名前のリストを問い合わせます
 func GetCmdNames(queryRoute string, cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "names",
 		Short: "names",
-		// Args:  cobra.ExactArgs(1),
+		// Args：cobra.ExactArgs（1）、
 		RunE: func(cmd *cobra.Command, args []string) error {
 			cliCtx := context.NewCLIContext().WithCodec(cdc)
 
@@ -121,7 +121,7 @@ import (
 	authtxb "github.com/cosmos/cosmos-sdk/x/auth/client/txbuilder"
 )
 
-// GetCmdBuyName is the CLI command for sending a BuyName transaction
+// GetCmdBuyNameはBuyNameトランザクションを送信するためのCLIコマンドです。
 func GetCmdBuyName(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "buy-name [name] [amount]",
@@ -154,7 +154,7 @@ func GetCmdBuyName(cdc *codec.Codec) *cobra.Command {
 	}
 }
 
-// GetCmdSetName is the CLI command for sending a SetName transaction
+// GetCmdSetNameはSetNameトランザクションを送信するためのCLIコマンドです
 func GetCmdSetName(cdc *codec.Codec) *cobra.Command {
 	return &cobra.Command{
 		Use:   "set-name [name] [value]",
@@ -187,7 +187,7 @@ func GetCmdSetName(cdc *codec.Codec) *cobra.Command {
 
  - ここでは `authcmd`パッケージが使われています。 [使い方の詳細についてはgodocsにあります](https://godoc.org/github.com/cosmos/cosmos-sdk/x/auth/client/cli#GetAccountDecoder)。 CLIによって制御されているアカウントへのアクセスを提供し、署名を容易にします。
 
-##モジュールクライアント
+## モジュールクライアント
 
 この機能をエクスポートする最後の部分は `ModuleClient`と呼ばれ、`./x/nameservice/client/module_client.go`に入ります。 [モジュールクライアント](https://godoc.org/github.com/cosmos/cosmos-sdk/types#ModuleClients)は、モジュールがクライアント機能をエクスポートするための標準的な方法を提供します。
 
@@ -203,7 +203,7 @@ import (
 	amino "github.com/tendermint/go-amino"
 )
 
-// ModuleClient exports all client functionality from this module
+// ModuleClientはこのモジュールからすべてのクライアント機能をエクスポートします
 type ModuleClient struct {
 	storeKey string
 	cdc      *amino.Codec
@@ -213,9 +213,9 @@ func NewModuleClient(storeKey string, cdc *amino.Codec) ModuleClient {
 	return ModuleClient{storeKey, cdc}
 }
 
-// GetQueryCmd returns the cli query commands for this module
+// GetQueryCmdはこのモジュールのcliクエリコマンドを返します
 func (mc ModuleClient) GetQueryCmd() *cobra.Command {
-	// Group nameservice queries under a subcommand
+	//サブコマンドの下でネームサービスクエリをグループ化する
 	namesvcQueryCmd := &cobra.Command{
 		Use:   "nameservice",
 		Short: "Querying commands for the nameservice module",
@@ -229,7 +229,7 @@ func (mc ModuleClient) GetQueryCmd() *cobra.Command {
 	return namesvcQueryCmd
 }
 
-// GetTxCmd returns the transaction commands for this module
+// GetTxCmdはこのモジュールのトランザクションコマンドを返します
 func (mc ModuleClient) GetTxCmd() *cobra.Command {
 	namesvcTxCmd := &cobra.Command{
 		Use:   "nameservice",
@@ -250,4 +250,4 @@ func (mc ModuleClient) GetTxCmd() *cobra.Command {
  - この抽象化により、クライアントは標準の方法でモジュールからクライアント機能をインポートできます。これは、エントリポイントを構築するとき(entrypoint.md)に表示されます。
  - このインタフェースに残りの機能(このチュートリアルの次の部分で説明)を追加するための[未解決の問題](https://github.com/cosmos/cosmos-sdk/issues/2955)もあります。
 
-###これで[RESTクライアントがあなたのモジュールと通信するために使用するルート](rest.md)を定義する準備が整いました。
+### これで[RESTクライアントがあなたのモジュールと通信するために使用するルート](rest.md)を定義する準備が整いました。

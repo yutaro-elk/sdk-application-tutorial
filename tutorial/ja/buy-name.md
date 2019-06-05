@@ -1,18 +1,18 @@
 # 購入名
 
-##メッセージ
+## メッセージ
 
 今度は名前を購入するための `Msg`を定義し、それを`./x/nameservice/msgs.go`ファイルに追加します。このコードは `SetName`と非常によく似ています。
 
 ```go
-// MsgBuyName defines the BuyName message
+// MsgBuyNameはBuyNameメッセージを定義します
 type MsgBuyName struct {
 	Name string
 	Bid    sdk.Coins
 	Buyer  sdk.AccAddress
 }
 
-// NewMsgBuyName is the constructor function for MsgBuyName
+// NewMsgBuyNameはMsgBuyNameのコンストラクタ関数です。
 func NewMsgBuyName(name string, bid sdk.Coins, buyer sdk.AccAddress) MsgBuyName {
 	return MsgBuyName{
 		Name: name,
@@ -21,13 +21,13 @@ func NewMsgBuyName(name string, bid sdk.Coins, buyer sdk.AccAddress) MsgBuyName 
 	}
 }
 
-// Route should return the name of the module
+// ルートはモジュールの名前を返すべきです
 func (msg MsgBuyName) Route() string { return "nameservice" }
 
-// Type should return the action
+// 型はアクションを返すべきです
 func (msg MsgBuyName) Type() string { return "buy_name" }
 
-// ValidateBasic runs stateless checks on the message
+// ValidateBasicはメッセージに対してステートレスチェックを実行します。
 func (msg MsgBuyName) ValidateBasic() sdk.Error {
 	if msg.Buyer.Empty() {
 		return sdk.ErrInvalidAddress(msg.Buyer.String())
@@ -41,7 +41,7 @@ func (msg MsgBuyName) ValidateBasic() sdk.Error {
 	return nil
 }
 
-// GetSignBytes encodes the message for signing
+// GetSignBytesは署名用のメッセージをエンコードします
 func (msg MsgBuyName) GetSignBytes() []byte {
 	b, err := json.Marshal(msg)
 	if err != nil {
@@ -50,7 +50,7 @@ func (msg MsgBuyName) GetSignBytes() []byte {
 	return sdk.MustSortJSON(b)
 }
 
-// GetSigners defines whose signature is required
+// GetSignersは誰の署名が必要かを定義します
 func (msg MsgBuyName) GetSigners() []sdk.AccAddress {
 	return []sdk.AccAddress{msg.Buyer}
 }
@@ -58,7 +58,7 @@ func (msg MsgBuyName) GetSigners() []sdk.AccAddress {
 次に、 `./x/nameservice/handler.go`ファイルで、モジュールルーターに` MsgBuyName`ハンドラーを追加します。
 
 ```go
-// NewHandler returns a handler for "nameservice" type messages.
+// NewHandlerは "nameservice"タイプのメッセージのハンドラを返します。
 func NewHandler(keeper Keeper) sdk.Handler {
 	return func(ctx sdk.Context, msg sdk.Msg) sdk.Result {
 		switch msg := msg.(type) {
@@ -77,10 +77,10 @@ func NewHandler(keeper Keeper) sdk.Handler {
 最後に、メッセージによって引き起こされる状態遷移を実行する `BuyName`` handler`関数を定義します。この時点でメッセージは `ValidateBasic`関数を実行しているので、何らかの入力検証があったことを覚えておいてください。しかし、 `ValidateBasic`はアプリケーションの状態を問い合わせることはできません。ネットワークの状態に依存する検証ロジック(例えば口座残高)は `handler`関数で実行されるべきです。
 
 ```go
-// Handle a message to buy name
+//名前を買うためのメッセージを処理する
 func handleMsgBuyName(ctx sdk.Context, keeper Keeper, msg MsgBuyName) sdk.Result {
-	if keeper.GetPrice(ctx, msg.Name).IsAllGT(msg.Bid) { // Checks if the the bid price is greater than the price paid by the current owner
-		return sdk.ErrInsufficientCoins("Bid not high enough").Result() // If not, throw an error
+	if keeper.GetPrice(ctx, msg.Name).IsAllGT(msg.Bid) { //入札価格が現在の所有者が支払った価格より高いかどうかを確認します
+		return sdk.ErrInsufficientCoins("Bid not high enough").Result() //そうでなければ、エラーをスローします
 	}
 	if keeper.HasOwner(ctx, msg.Name) {
 		_, err := keeper.coinKeeper.SendCoins(ctx, msg.Buyer, keeper.GetOwner(ctx, msg.Name), msg.Bid)
@@ -88,7 +88,7 @@ func handleMsgBuyName(ctx sdk.Context, keeper Keeper, msg MsgBuyName) sdk.Result
 			return sdk.ErrInsufficientCoins("Buyer does not have enough coins").Result()
 		}
 	} else {
-		_, _, err := keeper.coinKeeper.SubtractCoins(ctx, msg.Buyer, msg.Bid) // If so, deduct the Bid amount from the sender
+		_, _, err := keeper.coinKeeper.SubtractCoins(ctx, msg.Buyer, msg.Bid) //もしそうなら、送り主から入札金額を差し引く
 		if err != nil {
 			return sdk.ErrInsufficientCoins("Buyer does not have enough coins").Result()
 		}
@@ -107,5 +107,5 @@ func handleMsgBuyName(ctx sdk.Context, keeper Keeper, msg MsgBuyName) sdk.Result
 
 > _*NOTE*_：このハンドラは `coinKeeper`の関数を使って通貨操作を行います。アプリケーションが通貨操作を実行している場合は、[このモジュールのgodocs](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#BaseKeeper)を参照してください。それが公開する機能。
 
-###あなたの `Msgs`と` Handlers`が定義されたので、これらのトランザクションからデータを作ることについて学ぶ時が来ました[問い合わせに利用可能](queriers.md)!
+### あなたの `Msgs`と` Handlers`が定義されたので、これらのトランザクションからデータを作ることについて学ぶ時が来ました[問い合わせに利用可能](queriers.md)!
 

@@ -1,6 +1,6 @@
 # アプリケーションの構築と実行
 
-## `nameservice`アプリケーションを構築する
+##`nameservice`アプリケーションを構築する
 
 機能を確認するためにこのリポジトリで `nameservice`アプリケーションを構築したい場合は** Go 1.12.1 + **が必要です。
 
@@ -18,10 +18,10 @@ source ~/.bash_profile
 これで、アプリケーションをインストールして実行することができます。
 
 ```bash
-# Install the app into your $GOBIN
+# あなたの$GOBINにアプリをインストールする
 make install
 
-# Now you should be able to run the following commands:
+# これで、以下のコマンドを実行できるはずです。
 nsd help
 nscli help
 ```
@@ -37,21 +37,21 @@ nscli help
 > _*NOTE*_：レジャー用のCosmosアプリを持っていてそれを使いたい場合、 `nscli keys add jack`でキーを作成するときに最後に` --ledger`を追加するだけです。必要なものはこれだけです。サインインすると、 `jack`は元帳キーとして認識され、デバイスが必要になります。
 
 ```bash
-# Initialize configuration files and genesis file
+# 設定ファイルと起源ファイルを初期化する
 nsd init --chain-id namechain
 
-# Copy the `Address` output here and save it for later use 
-# [optional] add "--ledger" at the end to use a Ledger Nano S 
+# ここに `Address`の出力をコピーして後で使うためにそれを保存する
+# [オプション]元帳ナノSを使用するには、末尾に "--ledger"を追加します。
 nscli keys add jack
 
-# Copy the `Address` output here and save it for later use
+# ここに `Address`の出力をコピーして後で使うためにそれを保存する
 nscli keys add alice
 
-# Add both accounts, with coins to the genesis file
+# コインを使って両方のアカウントをジェネシスファイルに追加します。
 nsd add-genesis-account $(nscli keys show jack -a) 1000nametoken,1000jackcoin
 nsd add-genesis-account $(nscli keys show alice -a) 1000nametoken,1000alicecoin
 
-# Configure your CLI to eliminate need for chain-id flag
+# chain-idフラグが不要になるようにCLIを設定します。
 nscli config chain-id namechain
 nscli config output json
 nscli config indent true
@@ -63,26 +63,26 @@ nscli config trust-node true
 作成したネットワークに対してコマンドを実行するには、別の端末を開きます。
 
 ```bash
-# First check the accounts to ensure they have funds
+# まず口座をチェックして資金があることを確認します
 nscli query account $(nscli keys show jack -a) 
 nscli query account $(nscli keys show alice -a) 
 
-# Buy your first name using your coins from the genesis file
+# ジェネシスファイルからあなたのコインを使ってあなたのファーストネームを買う
 nscli tx nameservice buy-name jack.id 5nametoken --from jack 
 
-# Set the value for the name you just bought
+# 購入したばかりの名前の値を設定します
 nscli tx nameservice set-name jack.id 8.8.8.8 --from jack 
 
-# Try out a resolve query against the name you registered
+# 登録した名前に対して解決クエリを試してください。
 nscli query nameservice resolve jack.id
-# > 8.8.8.8
+# ＞ ８。８。８。８
 
-# Try out a whois query against the name you just registered
+# 登録したばかりの名前に対してwhoisクエリを試してください。
 nscli query nameservice whois jack.id
-# > {"value":"8.8.8.8","owner":"cosmos1l7k5tdt2qam0zecxrx78yuw447ga54dsmtpk2s","price":[{"denom":"nametoken","amount":"5"}]}
+# > {"値"： "8.8.8.8"、 "所有者"： "cosmos1l7k5tdt2qam0zecxrx78yuw447ga54dsmtpk2s"、 "価格"：[{"デノーム"： "名前"： "5"}]}
 
-# Alice buys name from jack
+# アリスはジャックから名前を買う
 nscli tx nameservice buy-name jack.id 10nametoken --from alice 
 ```
 
-###おめでとうございます、Cosmos SDKアプリケーションを作成しました。このチュートリアルはこれで完了です。 RESTサーバーを使って同じコマンドを実行する方法を知りたい場合は[ここをクリック](run-rest.md)。
+### おめでとうございます、Cosmos SDKアプリケーションを作成しました。このチュートリアルはこれで完了です。 RESTサーバーを使って同じコマンドを実行する方法を知りたい場合は[ここをクリック](run-rest.md)。

@@ -54,16 +54,16 @@ type nameServiceApp struct {
 	nsKeeper            nameservice.Keeper
 }
 
-// NewNameServiceApp is a constructor function for nameServiceApp
+// NewNameServiceAppはnameServiceAppのコンストラクタ関数です
 func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 
-	// First define the top level codec that will be shared by the different modules
+	//最初に、異なるモジュールによって共有されるトップレベルのコーデックを定義します
 	cdc := MakeCodec()
 
-	// BaseApp handles interactions with Tendermint through the ABCI protocol
+	// BaseAppはABCIプロトコルを介してTendermintとのやり取りを処理します
 	bApp := bam.NewBaseApp(appName, logger, db, auth.DefaultTxDecoder(cdc))
 
-	// Here you initialize your application with the store keys it requires
+	//ここで、必要なストアキーを使ってアプリケーションを初期化します。
 	var app = &nameServiceApp{
 		BaseApp: bApp,
 		cdc:     cdc,
@@ -92,16 +92,16 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 完成したコンストラクタは次のようになります。
 
 ```go
-// NewNameServiceApp is a constructor function for nameServiceApp
+// NewNameServiceAppはnameServiceAppのコンストラクタ関数です
 func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 
-	// First define the top level codec that will be shared by the different modules
+	//最初に、異なるモジュールによって共有されるトップレベルのコーデックを定義します
 	cdc := MakeCodec()
 
-	// BaseApp handles interactions with Tendermint through the ABCI protocol
+	// BaseAppはABCIプロトコルを介してTendermintとのやり取りを処理します
 	bApp := bam.NewBaseApp(appName, logger, db, auth.DefaultTxDecoder(cdc))
 
-	// Here you initialize your application with the store keys it requires
+	//ここで、必要なストアキーを使ってアプリケーションを初期化します。
 	var app = &nameServiceApp{
 		BaseApp: bApp,
 		cdc:     cdc,
@@ -114,10 +114,10 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 		tkeyParams:       sdk.NewTransientStoreKey("transient_params"),
 	}
 
-	// The ParamsKeeper handles parameter storage for the application
+	// ParamsKeeperはアプリケーションのパラメータ格納を処理します
 	app.paramsKeeper = params.NewKeeper(app.cdc, app.keyParams, app.tkeyParams)
 
-	// The AccountKeeper handles address -> account lookups
+	// AccountKeeperがアドレスを処理 - >アカウント検索
 	app.accountKeeper = auth.NewAccountKeeper(
 		app.cdc,
 		app.keyAccount,
@@ -125,39 +125,39 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 		auth.ProtoBaseAccount,
 	)
 
-	// The BankKeeper allows you perform sdk.Coins interactions
+	// BankKeeperを使用するとsdk.Coinsインタラクションを実行できます
 	app.bankKeeper = bank.NewBaseKeeper(
 		app.accountKeeper,
 		app.paramsKeeper.Subspace(bank.DefaultParamspace),
 		bank.DefaultCodespace,
 	)
 
-	// The FeeCollectionKeeper collects transaction fees and renders them to the fee distribution module
+	// FeeCollectionKeeperは取引手数料を収集し、それらを手数料分配モジュールに提供します。
 	app.feeCollectionKeeper = auth.NewFeeCollectionKeeper(cdc, app.keyFeeCollection)
 
-	// The NameserviceKeeper is the Keeper from the module for this tutorial
-	// It handles interactions with the namestore
+	// NameserviceKeeperは、このチュートリアルのモジュールのKeeperです。
+	//ネームストアとのやり取りを処理します
 	app.nsKeeper = nameservice.NewKeeper(
 		app.bankKeeper,
 		app.keyNS,
 		app.cdc,
 	)
 
-	// The AnteHandler handles signature verification and transaction pre-processing
+	// AnteHandlerは署名の検証とトランザクションの前処理を処理します
 	app.SetAnteHandler(auth.NewAnteHandler(app.accountKeeper, app.feeCollectionKeeper))
 
-	// The app.Router is the main transaction router where each module registers its routes
-	// Register the bank and nameservice routes here
+	// app.Routerは、各モジュールがルートを登録するメイントランザクションルーターです。
+	//銀行とネームサービスのルートをここに登録する
 	app.Router().
 		AddRoute("bank", bank.NewHandler(app.bankKeeper)).
 		AddRoute("nameservice", nameservice.NewHandler(app.nsKeeper))
 
-	// The app.QueryRouter is the main query router where each module registers its routes
+	// app.QueryRouterは、各モジュールがルートを登録するメインのクエリールーターです。
 	app.QueryRouter().
 		AddRoute("nameservice", nameservice.NewQuerier(app.nsKeeper)).
 		AddRoute("acc", auth.NewQuerier(app.accountKeeper))
 
-	// The initChainer handles translating the genesis.json file into initial state for the network
+	// initChainerはgenesis.jsonファイルをネットワークの初期状態に変換します。
 	app.SetInitChainer(app.initChainer)
 
 	app.MountStores(
@@ -185,7 +185,7 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 コンストラクタは `initChainer`関数を登録しますが、まだ定義されていません。先に進んでそれを作成してください。
 
 ```go
-// GenesisState represents chain state at the start of the chain. Any initial state (account balances) are stored here.
+// GenesisStateは、チェーンの先頭にあるチェーンの状態を表します。初期状態（口座残高）はここに保存されます。
 type GenesisState struct {
 	AuthData auth.GenesisState   `json:"auth"`
 	BankData bank.GenesisState   `json:"bank"`
@@ -212,7 +212,7 @@ func (app *nameServiceApp) initChainer(ctx sdk.Context, req abci.RequestInitChai
 	return abci.ResponseInitChain{}
 }
 
-// ExportAppStateAndValidators does the things
+// ExportAppStateAndValidatorsが処理を行います
 func (app *nameServiceApp) ExportAppStateAndValidators() (appState json.RawMessage, validators []tmtypes.GenesisValidator, err error) {
 	ctx := app.NewContext(true, abci.Header{})
 	accounts := []*auth.BaseAccount{}
@@ -244,10 +244,10 @@ func (app *nameServiceApp) ExportAppStateAndValidators() (appState json.RawMessa
 }
 ```
 
-最後に、あなたので使われているすべてのモジュールを正しく登録するアミノ[`* codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec)を生成するためのヘルパー関数を追加します。応用：
+最後に、あなたので使われているすべてのモジュールを正しく登録するアミノ[`*codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec)を生成するためのヘルパー関数を追加します。応用：
 
 ```go
-// MakeCodec generates the necessary codecs for Amino
+// MakeCodecはAminoに必要なコーデックを生成します
 func MakeCodec() *codec.Codec {
 	var cdc = codec.New()
 	auth.RegisterCodec(cdc)
@@ -260,4 +260,4 @@ func MakeCodec() *codec.Codec {
 }
 ```
 
-###あなたのモジュールを含むアプリケーションを作成したので、[エントリポイントを構築](entrypoint.md)しましょう。
+### あなたのモジュールを含むアプリケーションを作成したので、[エントリポイントを構築](entrypoint.md)しましょう。

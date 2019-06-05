@@ -35,7 +35,7 @@ const (
 まず、 `RegisterRoutes`関数であなたのモジュール用のRESTクライアントインターフェースを定義します。名前空間が他のモジュールのルートと衝突しないように、すべてのルートを自分のモジュール名で始めます。
 
 ```go
-// RegisterRoutes - Central function to define routes that get registered by the main application
+// RegisterRoutes  - メインアプリケーションによって登録されるルートを定義するための中央関数
 func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router, cdc *codec.Codec, storeName string) {
 	r.HandleFunc(fmt.Sprintf("/%s/names", storeName), buyNameHandler(cdc, cliCtx)).Methods("POST")
 	r.HandleFunc(fmt.Sprintf("/%s/names", storeName), setNameHandler(cdc, cliCtx)).Methods("PUT")
@@ -44,7 +44,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router, cdc *codec.Codec, 
 }
 ```
 
-###クエリハンドラ
+### クエリハンドラ
 
 次に、上記のハンドラを定義します。これらは前に定義したCLIメソッドと非常によく似ています。クエリ `whois`と` resolve`から始めましょう：
 
@@ -135,7 +135,7 @@ func buyNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 			return
 		}
 
-		// create the message
+		//メッセージを作成します
 		msg := nameservice.NewMsgBuyName(req.Name, coins, addr)
 		err = msg.ValidateBasic()
 		if err != nil {
@@ -172,7 +172,7 @@ func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 			return
 		}
 
-		// create the message
+		//メッセージを作成します
 		msg := nameservice.NewMsgSetName(req.Name, req.Value, addr)
 		err = msg.ValidateBasic()
 		if err != nil {
@@ -190,4 +190,4 @@ func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
  -  [`BaseReq`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq)には、トランザクションを作成するための基本的な必須フィールド(使用するキー、デコード方法)が含まれています。それは、あなたがどのチェーンにいるのかなど...そして示されているように埋め込まれるように設計されています。
  -  `baseReq.ValidateBasic`と` clientrest.CompleteAndBroadcastTxREST`はレスポンスコードの設定をあなたに代わって処理するので、これらの関数を使うときにエラーや成功を処理することについて心配する必要はありません。
 
-###今すぐあなたのモジュールはそれが[あなたのCosmos SDKアプリケーションに組み込まれる](./app-complete.md)されるために必要な全てを持っています！
+### 今すぐあなたのモジュールはそれが[あなたのCosmos SDKアプリケーションに組み込まれる](./app-complete.md)されるために必要な全てを持っています！
