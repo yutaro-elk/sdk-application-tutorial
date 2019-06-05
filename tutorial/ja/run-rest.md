@@ -1,13 +1,13 @@
 # RESTルートを実行する
 
-CLIクエリとトランザクションをテストしたので、今度はRESTサーバーで同じことをテストします。以前に実行していた `nsd`をそのままにして、あなたのアドレスを集めることから始めましょう：
+CLIクエリとトランザクションをテストしたので、今度はRESTサーバーで同じことをテストします。以前に実行していた`nsd`をそのままにして、あなたのアドレスを集めることから始めましょう：
 
 ```bash
 $ nscli keys show jack --address
 $ nscli keys show alice --address
 ```
 
-今度は別の端末ウィンドウで `rest-server`を起動します。
+今度は別の端末ウィンドウで`rest-server`を起動します。
 
 ```bash
 $ nscli rest-server --chain-id namechain --trust-node
@@ -51,7 +51,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 
 ### リクエストスキーマ：
 
-#### `POST/nameservice/names` BuyNameリクエストボディ：
+#### `POST/nameservice/names`BuyNameリクエストボディ：
 ```json
 {
   "base_req": {
@@ -69,7 +69,7 @@ $ curl -XPOST -s http://localhost:1317/nameservice/names --data-binary '{"base_r
 }
 ```
 
-#### `PUT /nameservice/names` SetNameリクエストボディ：
+#### `PUT /nameservice/names`SetNameリクエストボディ：
 ```json
 {
   "base_req": {

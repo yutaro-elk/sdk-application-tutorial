@@ -4,7 +4,7 @@
 
 ## `types.go`
 
-あなたのモジュールのための関税タイプを保持するためにファイル `./x/nameservice/types.go`を作成することから始めてください。 Cosmos SDKアプリケーションでは、規約はモジュールが `./x/`フォルダにあることです。
+あなたのモジュールのための関税タイプを保持するためにファイル`./x/nameservice/types.go`を作成することから始めてください。 Cosmos SDKアプリケーションでは、規約はモジュールが`./x/`フォルダにあることです。
 
 ## Whois
 
@@ -25,9 +25,9 @@ import (
 
 // Whoisはnameのすべてのメタデータを含む構造体です。
 type Whois struct {
-	Value string         `json:"value"`
-	Owner sdk.AccAddress `json:"owner"`
-	Price sdk.Coins      `json:"price"`
+	Value string        `json:"value"`
+	Owner sdk.AccAddress`json:"owner"`
+	Price sdk.Coins     `json:"price"`
 }
 ```
 

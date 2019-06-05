@@ -2,7 +2,7 @@
 
 このチュートリアルでは、機能的な[Cosmos SDK](https://github.com/cosmos/cosmos-sdk/)アプリケーションを作成し、その過程でSDKの基本概念と構造を学びます。この例では、Cosmos SDKを利用して**迅速かつ簡単に独自のブロックチェーンを構築する**方法を紹介します。
 
-このチュートリアルの終わりまでに、あなたは機能的な `nameservice`アプリケーション、他の文字列への文字列のマッピング(` map [string] string`)を持つことになります。これは[Namecoin](https://namecoin.org/)、[ENS](https://ens.domains/)、または[Handshake](https://handshake.org/)の 。伝統的なDNSシステム( `map [domain] zonefile`)。ユーザーは未使用の名前を購入したり、自分の名前を売買することができます。
+このチュートリアルの終わりまでに、あなたは機能的な`nameservice`アプリケーション、他の文字列への文字列のマッピング(`map [string] string`)を持つことになります。これは[Namecoin](https://namecoin.org/)、[ENS](https://ens.domains/)、または[Handshake](https://handshake.org/)の 。伝統的なDNSシステム(`map [domain] zonefile`)。ユーザーは未使用の名前を購入したり、自分の名前を売買することができます。
 
 このチュートリアルプロジェクトの最終的なソースコードはすべてこのディレクトリにあります(そしてコンパイルされます)。ただし、手動で作業を進め、自分でプロジェクトを構築してみることをお勧めします。
 
@@ -65,7 +65,7 @@ git init
 8. [あなたのモジュール用のCLIインタラクション](./cli.md)を作成します。
 9. [自分のネームサービスにアクセスするためのクライアント用のHTTPルート](rest.md)を作成します。
 10. モジュールをインポートして[アプリケーションのビルドを終了します](./app-complete.md)！
-11. アプリケーションに[`nsd`と` nscli`エントリポイント](./entrypoint.md)を作成します。
+11. アプリケーションに[`nsd`と`nscli`エントリポイント](./entrypoint.md)を作成します。
 12. [`dep`を使った依存関係管理](./dep.md)を設定します。
 13. 例を[ビルドして実行](./build-run.md)します。
 14. [RESTルートを実行する](run-rest.md)。

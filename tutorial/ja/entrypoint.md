@@ -1,20 +1,20 @@
 # エントリポイント
 
-golangでは、規約はプロジェクトの `./cmd`フォルダにバイナリにコンパイルされるファイルを置くことです。あなたのアプリケーションにはあなたが作りたい2つのバイナリがあります。
+golangでは、規約はプロジェクトの`./cmd`フォルダにバイナリにコンパイルされるファイルを置くことです。あなたのアプリケーションにはあなたが作りたい2つのバイナリがあります。
 
- -  `nsd`：このバイナリは、p2p接続を維持し、トランザクションを伝播し、ローカルストレージを処理し、ネットワークと対話するためのRPCインタフェースを提供するという点で、` bitcoind`や他の暗号通貨デーモンと似ています。この場合、Tendermintはネットワーキングとトランザクションの順序付けに使用されます。
- -  `nscli`：このバイナリはユーザがあなたのアプリケーションと対話することを可能にするコマンドを提供します。
+ - `nsd`：このバイナリは、p2p接続を維持し、トランザクションを伝播し、ローカルストレージを処理し、ネットワークと対話するためのRPCインタフェースを提供するという点で、`bitcoind`や他の暗号通貨デーモンと似ています。この場合、Tendermintはネットワーキングとトランザクションの順序付けに使用されます。
+ - `nscli`：このバイナリはユーザがあなたのアプリケーションと対話することを可能にするコマンドを提供します。
 
 はじめに、これらのバイナリをインスタンス化する2つのファイルをプロジェクトディレクトリに作成します。
 
- -  `./cmd/nsd/main.go`
- -  `./cmd/nscli/main.go`
+ - `./cmd/nsd/main.go`
+ - `./cmd/nscli/main.go`
 
 ## `nsd`
 
-以下のコードを `nsd/main.go`に追加することから始めます。
+以下のコードを`nsd/main.go`に追加することから始めます。
 
-> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}`)。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています(`github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります(`github.com/ {.Username}/{.Project.Repo}`)。
 
 ```go
 package main
@@ -179,7 +179,7 @@ $ nsd add-genesis-account cosmos1tse7r2fadvlrrgau3pa0ss7cqh55wrv6y9alwh 1000STAK
 			config := ctx.Config
 			genFile := config.GenesisFile()
 			if !common.FileExists(genFile) {
-				return fmt.Errorf("%s does not exist, run `gaiad init` first", genFile)
+				return fmt.Errorf("%s does not exist, run`gaiad init`first", genFile)
 			}
 			genContents, err := ioutil.ReadFile(genFile)
 			if err != nil {
@@ -224,7 +224,7 @@ func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 	}
 
 	bz, err := cdc.MarshalJSON(struct {
-		Addr sdk.AccAddress `json:"addr"`
+		Addr sdk.AccAddress`json:"addr"`
 	}{addr})
 	if err != nil {
 		return
@@ -251,14 +251,14 @@ func SimpleAppGenTx(cdc *codec.Codec, pk crypto.PubKey) (
 上記のコードについての注意：
 
  - 上記のコードの大部分は、Tendermint、Cosmos-SDK、そしてあなたのNameserviceモジュールからのCLIコマンドを組み合わせたものです。
- -  `InitCmd`は、設定から生成状態を生成することをアプリに許可します。チェーンブートストラップ処理の詳細については、関数呼び出しを調べてください。
- -  `AddGenesisAccountCmd`は、ジェネシスファイルにアカウントを追加するのに便利です。チェーンスタート時にコインで財布を入れることができます。
+ - `InitCmd`は、設定から生成状態を生成することをアプリに許可します。チェーンブートストラップ処理の詳細については、関数呼び出しを調べてください。
+ - `AddGenesisAccountCmd`は、ジェネシスファイルにアカウントを追加するのに便利です。チェーンスタート時にコインで財布を入れることができます。
 
 ## `nscli`
 
 `nscli`コマンドをビルドして終了してください。
 
-> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/{.Username}/{.Project.Repo}`)。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています(`github.com/cosmos/sdk-application-tutorial`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります(`github.com/{.Username}/{.Project.Repo}`)。
 
 ```go
 package main
@@ -422,8 +422,8 @@ func initConfig(cmd *cobra.Command) error {
 注意：
 
  - コードはTendermint、Cosmos-SDKおよびあなたのNameserviceモジュールからのCLIコマンドを結合します。
- -  [`cobra` CLI documentation](http://github.com/spf13/cobra)は上記のコードを理解するのに役立ちます。
- - ここで先に定義した `ModuleClient`を見ることができます。
- - ルートが `registerRoutes`関数にどのように含まれているかに注意してください
+ -  [`cobra`CLI documentation](http://github.com/spf13/cobra)は上記のコードを理解するのに役立ちます。
+ - ここで先に定義した`ModuleClient`を見ることができます。
+ - ルートが`registerRoutes`関数にどのように含まれているかに注意してください
 
 ### これであなたのバイナリは[依存関係管理とあなたのアプリのビルド](dep.md)を扱う時間を定義しました！

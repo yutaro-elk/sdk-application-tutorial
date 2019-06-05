@@ -2,11 +2,11 @@
 
 あなたのモジュールは、モジュールの機能へのプログラムによるアクセスを可能にするためにRESTインターフェースを公開することもできます。はじめに、HTTPハンドラを保持するファイルを作成します。
 
- -  `./x/nameservice/client/rest/rest.go`
+ - `./x/nameservice/client/rest/rest.go`
 
-始めるために `imports`と` const`を追加してください：
+始めるために`imports`と`const`を追加してください：
 
-> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています(`github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります(`github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
 
 ```go
 package rest
@@ -32,7 +32,7 @@ const (
 
 ### RegisterRoutes
 
-まず、 `RegisterRoutes`関数であなたのモジュール用のRESTクライアントインターフェースを定義します。名前空間が他のモジュールのルートと衝突しないように、すべてのルートを自分のモジュール名で始めます。
+まず、`RegisterRoutes`関数であなたのモジュール用のRESTクライアントインターフェースを定義します。名前空間が他のモジュールのルートと衝突しないように、すべてのルートを自分のモジュール名で始めます。
 
 ```go
 // RegisterRoutes  - メインアプリケーションによって登録されるルートを定義するための中央関数
@@ -46,7 +46,7 @@ func RegisterRoutes(cliCtx context.CLIContext, r *mux.Router, cdc *codec.Codec, 
 
 ### クエリハンドラ
 
-次に、上記のハンドラを定義します。これらは前に定義したCLIメソッドと非常によく似ています。クエリ `whois`と` resolve`から始めましょう：
+次に、上記のハンドラを定義します。これらは前に定義したCLIメソッドと非常によく似ています。クエリ`whois`と`resolve`から始めましょう：
 
 ```go
 func resolveNameHandler(cdc *codec.Codec, cliCtx context.CLIContext, storeName string) http.HandlerFunc {
@@ -94,19 +94,19 @@ func namesHandler(cdc *codec.Codec, cliCtx context.CLIContext, storeName string)
 
 上記のコードについての注意：
 
- - データを取得するために同じ `cliCtx.QueryWithData`関数を使っていることに注意してください
+ - データを取得するために同じ`cliCtx.QueryWithData`関数を使っていることに注意してください
  - これらの機能は、対応するCLI機能とほぼ同じです。
 
 ### Txハンドラ
 
-では `buyName`と` setName`トランザクションルートを定義しましょう。これらが実際に購入して名前を設定するトランザクションを送信していないことに注意してください。それはセキュリティ問題であるであろう要求と共にパスワードを送ることを必要とするでしょう。代わりに、これらのエンドポイントはそれぞれの特定のトランザクションを構築して返します。その後、それらは安全な方法で署名され、その後に `/ txs`のような標準のエンドポイントを使ってネットワークにブロードキャストされます。
+では`buyName`と`setName`トランザクションルートを定義しましょう。これらが実際に購入して名前を設定するトランザクションを送信していないことに注意してください。それはセキュリティ問題であるであろう要求と共にパスワードを送ることを必要とするでしょう。代わりに、これらのエンドポイントはそれぞれの特定のトランザクションを構築して返します。その後、それらは安全な方法で署名され、その後に`/ txs`のような標準のエンドポイントを使ってネットワークにブロードキャストされます。
 
 ```go
 type buyNameReq struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Name    string       `json:"name"`
-	Amount  string       `json:"amount"`
-	Buyer   string       `json:"buyer"`
+	BaseReq rest.BaseReq`json:"base_req"`
+	Name    string      `json:"name"`
+	Amount  string      `json:"amount"`
+	Buyer   string      `json:"buyer"`
 }
 
 func buyNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFunc {
@@ -147,10 +147,10 @@ func buyNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 }
 
 type setNameReq struct {
-	BaseReq rest.BaseReq `json:"base_req"`
-	Name    string       `json:"name"`
-	Value   string       `json:"value"`
-	Owner   string       `json:"owner"`
+	BaseReq rest.BaseReq`json:"base_req"`
+	Name    string      `json:"name"`
+	Value   string      `json:"value"`
+	Owner   string      `json:"owner"`
 }
 
 func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFunc {
@@ -188,6 +188,6 @@ func setNameHandler(cdc *codec.Codec, cliCtx context.CLIContext) http.HandlerFun
 上記のコードについての注意：
 
  -  [`BaseReq`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/utils#BaseReq)には、トランザクションを作成するための基本的な必須フィールド(使用するキー、デコード方法)が含まれています。それは、あなたがどのチェーンにいるのかなど...そして示されているように埋め込まれるように設計されています。
- -  `baseReq.ValidateBasic`と` clientrest.CompleteAndBroadcastTxREST`はレスポンスコードの設定をあなたに代わって処理するので、これらの関数を使うときにエラーや成功を処理することについて心配する必要はありません。
+ - `baseReq.ValidateBasic`と`clientrest.CompleteAndBroadcastTxREST`はレスポンスコードの設定をあなたに代わって処理するので、これらの関数を使うときにエラーや成功を処理することについて心配する必要はありません。
 
 ### 今すぐあなたのモジュールはそれが[あなたのCosmos SDKアプリケーションに組み込まれる](./app-complete.md)されるために必要な全てを持っています！

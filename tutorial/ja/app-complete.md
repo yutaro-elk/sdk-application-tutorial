@@ -1,8 +1,8 @@
 # モジュールをインポートしてアプリケーションを完成させる
 
-モジュールの準備ができたので、他の2つのモジュールと共に `./app.go`ファイルに組み込むことができます[` auth`](https://godoc.org/github.com/cosmos/cosmos- sdk/x/auth)および[`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank)：
+モジュールの準備ができたので、他の2つのモジュールと共に`./app.go`ファイルに組み込むことができます[`auth`](https://godoc.org/github.com/cosmos/cosmos- sdk/x/auth)および[`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank)：
 
-> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています( `github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります( `github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
+> _*NOTE*_：あなたのアプリケーションは今書いたコードをインポートする必要があります。ここではインポートパスがこのリポジトリに設定されています(`github.com/cosmos/sdk-application-tutorial/x/nameservice`)。自分のリポジトリをフォローしている場合は、それを反映するようにインポートパスを変更する必要があります(`github.com/ {.Username}/{.Project.Repo}/x/nameservice`)。
 
 ```go
 package app
@@ -28,7 +28,7 @@ import (
 )
 ```
 
-次に、 `nameServiceApp`構造体に` Keepers`とストアのキーを追加し、それに応じてコンストラクタを更新する必要があります。
+次に、`nameServiceApp`構造体に`Keepers`とストアのキーを追加し、それに応じてコンストラクタを更新する必要があります。
 
 ```go
 
@@ -82,12 +82,12 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 
 現時点では、コンストラクタにはまだ重要なロジックがありません。つまり、次のことが必要です。
 
- - 必要な各モジュールから必要な `Keepers`をインスタンス化します。
- - それぞれの `Keeper`が必要とする` storeKeys`を生成します。
- - 各モジュールから `Handler`を登録します。このためには `baseapp`の` router`の `AddRoute()`メソッドを使います。
- - 各モジュールからQuerierを登録します。このためには `baseapp`の` queryRouter`の `AddRoute()`メソッドを使います。
- -  `baseApp`マルチストアで提供されたキーに` KVStore`をマウントします。
- - 初期アプリケーション状態を定義するための `initChainer`を設定します。
+ - 必要な各モジュールから必要な`Keepers`をインスタンス化します。
+ - それぞれの`Keeper`が必要とする`storeKeys`を生成します。
+ - 各モジュールから`Handler`を登録します。このためには`baseapp`の`router`の`AddRoute()`メソッドを使います。
+ - 各モジュールからQuerierを登録します。このためには`baseapp`の`queryRouter`の`AddRoute()`メソッドを使います。
+ - `baseApp`マルチストアで提供されたキーに`KVStore`をマウントします。
+ - 初期アプリケーション状態を定義するための`initChainer`を設定します。
 
 完成したコンストラクタは次のようになります。
 
@@ -180,16 +180,16 @@ func NewNameServiceApp(logger log.Logger, db dbm.DB) *nameServiceApp {
 
 > _*NOTE*_：上記のTransientStoreは、永続化されていない状態のKVStoreのメモリ内実装です。
 
-`initChainer`は最初のチェーンスタート時に` genesis.json`のアカウントがどのようにアプリケーション状態にマッピングされるかを定義します。 `ExportAppStateAndValidators`関数はアプリケーションの初期状態をブートストラップするのを助けます。今のところ、これらについてどちらも心配する必要はありません。
+`initChainer`は最初のチェーンスタート時に`genesis.json`のアカウントがどのようにアプリケーション状態にマッピングされるかを定義します。`ExportAppStateAndValidators`関数はアプリケーションの初期状態をブートストラップするのを助けます。今のところ、これらについてどちらも心配する必要はありません。
 
-コンストラクタは `initChainer`関数を登録しますが、まだ定義されていません。先に進んでそれを作成してください。
+コンストラクタは`initChainer`関数を登録しますが、まだ定義されていません。先に進んでそれを作成してください。
 
 ```go
 // GenesisStateは、チェーンの先頭にあるチェーンの状態を表します。初期状態（口座残高）はここに保存されます。
 type GenesisState struct {
-	AuthData auth.GenesisState   `json:"auth"`
-	BankData bank.GenesisState   `json:"bank"`
-	Accounts []*auth.BaseAccount `json:"accounts"`
+	AuthData auth.GenesisState  `json:"auth"`
+	BankData bank.GenesisState  `json:"bank"`
+	Accounts []*auth.BaseAccount`json:"accounts"`
 }
 
 func (app *nameServiceApp) initChainer(ctx sdk.Context, req abci.RequestInitChain) abci.ResponseInitChain {
