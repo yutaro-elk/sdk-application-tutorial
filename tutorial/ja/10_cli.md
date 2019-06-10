@@ -6,7 +6,7 @@ Cosmos SDKはCLI対話のために[`cobra`](https://github.com/spf13/cobra)ラ�
  - `./x/nameservice/client/cli/tx.go`
  - `./x/nameservice/client/module_client.go`
 
-##クエリ
+## クエリ
 
 `query.go`から始めてください。ここで、各モジュールのQueriersに`cobra.Command`を定義します(`resolve`と`whois`)：
 
@@ -95,12 +95,12 @@ func GetCmdNames(queryRoute string, cdc *codec.Codec) *cobra.Command {
 
  -  CLIは新しい`context`を導入しました：[`CLIContext`](https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext)。 CLIとの対話に必要なユーザー入力およびアプリケーション構成に関するデータを運びます。
  - `cliCtx.QueryWithData()`関数に必要な`path`はあなたの問い合わせルーターの名前に直接対応します。
-   - パスの最初の部分は、SDKアプリケーションで可能なクエリの種類を区別するために使用されます。`custom`は`Queriers`のためのものです。
-   -  2番目の部分(`nameservice`)は問い合わせを送る先のモジュールの名前です。
-   - 最後に、呼び出されるモジュール内に特定のクエリアがあります。
-   - この例では、4番目の部分はクエリです。 queryパラメータは単純な文字列なので、これはうまくいきます。より複雑なクエリ入力を可能にするには、[`.QueryWithData()`]の2番目の引数を使用する必要があります(https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext.QueryWithData)`data`を渡すための関数。この例については、[Stakingモジュールのクエリア](https://github.com/cosmos/cosmos-sdk/blob/develop/x/stake/querier/querier.go#L103)を参照してください。
+	- パスの最初の部分は、SDKアプリケーションで可能なクエリの種類を区別するために使用されます。`custom`は`Queriers`のためのものです。
+	-  2番目の部分(`nameservice`)は問い合わせを送る先のモジュールの名前です。
+	- 最後に、呼び出されるモジュール内に特定のクエリアがあります。
+	- この例では、4番目の部分はクエリです。 queryパラメータは単純な文字列なので、これはうまくいきます。より複雑なクエリ入力を可能にするには、[`.QueryWithData()`]の2番目の引数を使用する必要があります(https://godoc.org/github.com/cosmos/cosmos-sdk/client/context#CLIContext.QueryWithData)`data`を渡すための関数。この例については、[Stakingモジュールのクエリア](https://github.com/cosmos/cosmos-sdk/blob/develop/x/stake/querier/querier.go#L103)を参照してください。
 
-##トランザクション
+## トランザクション
 
 クエリのやりとりが定義されたので、`tx.go`のトランザクション生成に移ります。
 
@@ -247,7 +247,7 @@ func (mc ModuleClient) GetTxCmd() *cobra.Command {
 
 上記のコードについての注意：
 
- - この抽象化により、クライアントは標準の方法でモジュールからクライアント機能をインポートできます。これは、エントリポイントを構築するとき(entrypoint.md)に表示されます。
+ - この抽象化により、クライアントは標準の方法でモジュールからクライアント機能をインポートできます。これは、エントリポイントを構築するとき(13_entrypoint.md)に表示されます。
  - このインタフェースに残りの機能(このチュートリアルの次の部分で説明)を追加するための[未解決の問題](https://github.com/cosmos/cosmos-sdk/issues/2955)もあります。
 
-### これで[RESTクライアントがあなたのモジュールと通信するために使用するルート](rest.md)を定義する準備が整いました。
+### これで[RESTクライアントがあなたのモジュールと通信するために使用するルート](11_rest.md)を定義する準備が整いました。

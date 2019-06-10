@@ -35,6 +35,6 @@ type Msg interface {
 
 `Handlers`は与えられた`Msg`が受信された時にとるべきアクション(どのストアを更新する必要があるか、どのように、そしてどんな条件下で)を定義します。
 
-このモジュールには、ユーザがアプリケーションの状態とやり取りするために送信できる2種類の`Msgs`があります：[`SetName`](set-name.md)と[`BuyName`](./buy-name.md)です。それらはそれぞれ関連する`Handler`を持ちます。
+このモジュールには、ユーザがアプリケーションの状態とやり取りするために送信できる2種類の`Msgs`があります：[`SetName`](06_set-name.md)と[`BuyName`](./07_buy-name.md)です。それらはそれぞれ関連する`Handler`を持ちます。
 
-### これで`Msgs`と`Handlers`の理解が深まったので、最初のメッセージを作り始めることができます：[`SetName`](set-name.md)。
+### これで`Msgs`と`Handlers`の理解が深まったので、最初のメッセージを作り始めることができます：[`SetName`](06_set-name.md)。

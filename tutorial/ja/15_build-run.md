@@ -85,4 +85,4 @@ nscli query nameservice whois jack.id
 nscli tx nameservice buy-name jack.id 10nametoken --from alice 
 ```
 
-### おめでとうございます、Cosmos SDKアプリケーションを作成しました。このチュートリアルはこれで完了です。 RESTサーバーを使って同じコマンドを実行する方法を知りたい場合は[ここをクリック](run-rest.md)。
+### おめでとうございます、Cosmos SDKアプリケーションを作成しました。このチュートリアルはこれで完了です。 RESTサーバーを使って同じコマンドを実行する方法を知りたい場合は[ここをクリック](16_run-rest.md)。

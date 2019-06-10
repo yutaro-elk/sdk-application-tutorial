@@ -1,4 +1,4 @@
-# 購入名
+# BuyName
 
 ## メッセージ
 
@@ -74,7 +74,7 @@ func NewHandler(keeper Keeper) sdk.Handler {
 }
 ```
 
-最後に、メッセージによって引き起こされる状態遷移を実行する`BuyName``handler`関数を定義します。この時点でメッセージは`ValidateBasic`関数を実行しているので、何らかの入力検証があったことを覚えておいてください。しかし、`ValidateBasic`はアプリケーションの状態を問い合わせることはできません。ネットワークの状態に依存する検証ロジック(例えば口座残高)は`handler`関数で実行されるべきです。
+最後に、メッセージによって引き起こされる状態遷移を実行する`BuyName` `handler`関数を定義します。この時点でメッセージは`ValidateBasic`関数を実行しているので、何らかの入力検証があったことを覚えておいてください。しかし、`ValidateBasic`はアプリケーションの状態を問い合わせることはできません。ネットワークの状態に依存する検証ロジック(例えば口座残高)は`handler`関数で実行されるべきです。
 
 ```go
 //名前を買うためのメッセージを処理する
@@ -107,5 +107,5 @@ func handleMsgBuyName(ctx sdk.Context, keeper Keeper, msg MsgBuyName) sdk.Result
 
 > _*NOTE*_：このハンドラは`coinKeeper`の関数を使って通貨操作を行います。アプリケーションが通貨操作を実行している場合は、[このモジュールのgodocs](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#BaseKeeper)を参照してください。それが公開する機能。
 
-### あなたの`Msgs`と`Handlers`が定義されたので、これらのトランザクションからデータを作ることについて学ぶ時が来ました[問い合わせに利用可能](queriers.md)!
+### あなたの`Msgs`と`Handlers`が定義されたので、これらのトランザクションからデータを作ることについて学ぶ時が来ました[問い合わせに利用可能](08_queriers.md)!
 

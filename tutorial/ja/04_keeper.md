@@ -29,20 +29,20 @@ type Keeper struct {
 上記のコードについての注意点
 
 * 3種類の`cosmos-sdk`パッケージがインポートされています：
- -  [`codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec) - `codec`はCosmosエンコーディングフォーマットで動作するためのツールを提供します。[Amino](https://github.com/tendermint/go-amino)
- -  [`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank) - `bank`モジュールは口座と硬貨振替を制御します。
- -  [`types`](https://godoc.org/github.com/cosmos/cosmos-sdk/types) - `types`にはSDKでよく使われる型が含まれています。
-*`Keeper`構造体このキーパーには、いくつかの重要な部分があります。
- -  [`bank.Keeper`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#Keeper) - これは`bank`モジュールからの`Keeper`への参照です。それを含めることで、このモジュールのコードが`bank`モジュールから関数を呼び出せるようになります。 SDKは、[オブジェクト機能](https://en.wikipedia.org/wiki/Object-capability_model)アプローチを使用してアプリケーション状態のセクションにアクセスします。これは、開発者が最小権限のアプローチを採用して、不良または悪意のあるモジュールの機能が、アクセスする必要がない状態の部分に影響を与えることを制限することを可能にするためです。
- -  [`*codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec) - これはAminoがバイナリのエンコードとデコードに使用するコーデックへのポインタです。構造体
- -  [`sdk.StoreKey`](https://godoc.org/github.com/cosmos/cosmos-sdk/types#StoreKey) - これは持続的な`sdk.KVStore`へのアクセスをゲートするストアキーです。あなたのアプリケーションの状態：名前が指し示すWhois構造体(すなわち`map[name]Whois`)。
+	-  [`codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec) - `codec`はCosmosエンコーディングフォーマットで動作するためのツールを提供します。[Amino](https://github.com/tendermint/go-amino)
+	-  [`bank`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank) - `bank`モジュールは口座と硬貨振替を制御します。
+	-  [`types`](https://godoc.org/github.com/cosmos/cosmos-sdk/types) - `types`にはSDKでよく使われる型が含まれています。
+* `Keeper`構造体このキーパーには、いくつかの重要な部分があります。
+	-  [`bank.Keeper`](https://godoc.org/github.com/cosmos/cosmos-sdk/x/bank#Keeper) - これは`bank`モジュールからの`Keeper`への参照です。それを含めることで、このモジュールのコードが`bank`モジュールから関数を呼び出せるようになります。 SDKは、[オブジェクト機能](https://en.wikipedia.org/wiki/Object-capability_model)アプローチを使用してアプリケーション状態のセクションにアクセスします。これは、開発者が最小権限のアプローチを採用して、不良または悪意のあるモジュールの機能が、アクセスする必要がない状態の部分に影響を与えることを制限することを可能にするためです。
+	-  [`*codec.Codec`](https://godoc.org/github.com/cosmos/cosmos-sdk/codec#Codec) - これはAminoがバイナリのエンコードとデコードに使用するコーデックへのポインタです。構造体
+	-  [`sdk.StoreKey`](https://godoc.org/github.com/cosmos/cosmos-sdk/types#StoreKey) - これは持続的な`sdk.KVStore`へのアクセスをゲートするストアキーです。あなたのアプリケーションの状態：名前が指し示すWhois構造体(すなわち`map[name]Whois`)。
 
 ## ゲッターとセッター
 
-今度は`Keeper`を通して店と対話するためのメソッドを追加する時が来ました。まず、与えられた名前が解決するWhoisを設定する関数を追加します。
+今度は`Keeper`を通してStoreと対話するためのメソッドを追加する時が来ました。まず、与えられた名前が解決するWhoisを設定する関数を追加します。
 
 ```go
-// Sets the entire Whois metadata struct for a name
+// Whoisメタデータ構造体全体を名前に設定します
 func (k Keeper) SetWhois(ctx sdk.Context, name string, whois Whois) {
 	if whois.Owner.Empty() {
 		return
@@ -123,11 +123,11 @@ func (k Keeper) SetPrice(ctx sdk.Context, name string, price sdk.Coins) {
 	k.SetWhois(ctx, name, whois)
 }
 ```
-SDKには`sdk.Iterator`と呼ばれる機能も含まれています。これは、ストア内の特定の場所にあるすべての`<Key、Value>`ペアに対して反復子を返します。
-ストア内に存在するすべての名前の反復子を取得するための関数を追加します。
+SDKには`sdk.Iterator`と呼ばれる機能も含まれています。これは、ストア内の特定の場所にあるすべての`<Key、Value>`ペアに対してイテレータを返します。
+ストア内に存在するすべての名前のイテレータを取得するための関数を追加します。
 
 ```go
-// Get an iterator over all names in which the keys are the names and the values are the whois
+// キーが名前で値がwhoisであるすべての名前のイテレータを取得します
 func (k Keeper) GetNamesIterator(ctx sdk.Context) sdk.Iterator {
 	store := ctx.KVStore(k.storeKey)
 	return sdk.KVStorePrefixIterator(store, []byte{})
@@ -147,4 +147,4 @@ func NewKeeper(coinKeeper bank.Keeper, storeKey sdk.StoreKey, cdc *codec.Codec) 
 }
 ```
 
-### 次に、[`Msgs`と`Handlers`](msgs-handlers.md)を使って、ユーザーがあなたの新しいストアとどのようにやり取りするのかを説明します。
+### 次に、[`Msgs`と`Handlers`](05_msgs-handlers.md)を使って、ユーザーがあなたの新しいストアとどのようにやり取りするのかを説明します。

@@ -31,7 +31,7 @@ type Whois struct {
 }
 ```
 
-[Design doc](./app-design.md)で説明したように、nameにまだ所有者がいない場合は、MinPriceを使用して名前を初期化します。
+[Design doc](./01_app-design.md)で説明したように、nameにまだ所有者がいない場合は、MinPriceを使用して名前を初期化します。
 
 ```go
 // 以前に所有されたことがないnameの初期開始価格
@@ -45,4 +45,4 @@ func NewWhois() Whois {
 }
 ```
 
-### 今度は[Keeper for the module](./keeper.md)を書くことに移ります。
+### 今度は[Keeper for the module](./04_keeper.md)を書くことに移ります。
